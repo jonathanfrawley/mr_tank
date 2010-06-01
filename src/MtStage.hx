@@ -1,5 +1,5 @@
 
-class Stage 
+class MtStage 
 {
 	private var m_Width : Int;
 	private var m_Height : Int;

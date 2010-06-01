@@ -1,13 +1,13 @@
 
 import flash.display.Shape;
 
-class StageGraphics {
+class MtStageGraphics {
 
 	public function new()
 	{
 	}
 
-	public function draw(stage:Stage, mc:flash.display.MovieClip) 
+	public function draw(stage:MtStage, mc:flash.display.MovieClip) 
 	{
 		var border:Shape = new Shape();
 

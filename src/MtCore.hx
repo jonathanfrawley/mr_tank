@@ -1,0 +1,2 @@
+
+typedef Int MtActorId;
