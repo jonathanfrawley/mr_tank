@@ -1,0 +1,3 @@
+Files: 
+ - clean.sh : removes binary and object files before a commit.
+ - test.sh : compiles the program and runs it.
