@@ -1,78 +1,69 @@
 
-import MtEventType;
+import MtEvent;
 import MtEventListener;
+import MtConstants;
 
-enum eConstants
+class MtEventManager
 {
-	kINFINITE = 0xffffffff;
-	kNUMQUEUES = 2;
-}
+	private var m_Listeners:List<MtEventListener>;
+	private var m_Events:List<MtEvent>;
+	private static var m_Instance:MtEventManager = new MtEventManager("EventManager");
 
-interface IMtEventManager
-{
-
-	public function addListener(inHandler:MtEventListener, inType:MtEventType) : Bool;
-	
-	public function delListener(inHandler:MtEventListener, inType:MtEventType ) : Bool;
-
-	public function trigger(inEvent:MtEventData) : Bool;
-
-	public function queueEvent(inEvent:MtEventData) : Bool;
-
-	public function abortEvent(inType:MtEventType, allOfType:Bool) : Bool;
-
-	public function tick(maxMillis:Int=kINFINITE) : Bool;
-
-	public function validateType(inType:MtEventType) : Bool;
-
-	static public function get() : IMtEventManager;
-}
-
-typedef List<MtEventListener> MtEventListenerList;
-typedef List<MtEventType> MtEventTypeList;
-
-class MtEventManager implements IMtEventManager
-{
-	private var m_ActiveQueue : Int;
-	private var m_Name : String;
-	private var m_SetAsGlobal : Bool;
-	
-	List<MtEventListener> 
-	List<MtEventType>
-
-	public function new(pName:String, setAsGlobal:Bool)
+	private function new(pName:String)
 	{
-		m_ActiveQueue = 0;	
+		m_Listeners = new List<MtEventListener>();
+		m_Events = new List<MtEvent>();
 	}
 
-	public function addListener(inHandler:MtEventListener, inType:MtEventType) : Bool
+	public function addListener(inHandler:MtEventListener) : Bool
 	{
-		if(! validateType(inType) )
+		m_Listeners.add(inHandler);	
+		return true;
+	}
+	
+	public function delListener(inHandler:MtEventListener) : Bool
+	{
+		m_Listeners.remove(inHandler);
+		return true;
+	}
+
+	public function trigger(inEvent:MtEvent) : Bool
+	{
+		for(listener in m_Listeners)
 		{
-			return false;
+			listener.handleEvent(inEvent);
 		}
-
-		var
-
+		return true;
 	}
-	
-	public function delListener(inHandler:MtEventListener, inType:MtEventType ) : Bool;
 
-	public function trigger(inEvent:MtEventData) : Bool
+	public function queueEvent(inEvent:MtEvent) : Bool
 	{
-		//TODO
-		return false;
+		m_Events.add(inEvent);
+		return true;
 	}
 
-	public function queueEvent(inEvent:MtEventData) : Bool;
+	public function removeEvent(inEvent:MtEvent) : Bool
+	{
+		m_Events.remove(inEvent);
+		return true;
+	}
 
-	public function abortEvent(inType:MtEventType, allOfType:Bool) : Bool;
+	public function tick(maxMillis:Int=0xffffffff) : Bool
+	{
+		//TODO : impose time limit
+		while( ! m_Events.isEmpty())
+		{
+			var event : MtEvent = m_Events.pop();
+			for(listener in m_Listeners)
+			{
+				listener.handleEvent(event);
+			}
+		}
+		return true;
+	}
 
-	public function tick(maxMillis:Int=kINFINITE) : Bool;
-
-	public function validateType(inType:MtEventType) : Bool;
-
-	static public function get() : IMtEventManager;
-		
-
+	static public function getInstance() : MtEventManager
+	{
+		return m_Instance;
+	}
 }

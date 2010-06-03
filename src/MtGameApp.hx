@@ -12,8 +12,7 @@ class MtGameApp
 
 	public function init() : Bool
 	{
-		m_GameLogic.init();
-		return true;
+		return m_GameLogic.init();
 	}
 
 	public function mainLoop() : Bool

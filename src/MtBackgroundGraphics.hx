@@ -10,7 +10,7 @@ class MtBackgroundGraphics
 	{
 	}
 
-	public function draw(stage:MtStage, mc:flash.display.MovieClip) 
+	public function draw(mc:flash.display.MovieClip) 
 	{
 		var background:Shape = new Shape();
 

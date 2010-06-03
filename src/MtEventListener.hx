@@ -12,6 +12,6 @@ interface MtEventListener
 	 * Description:  Returns true if consumes event, false otherwise.
 	 *--------------------------------------------------------------------------------------
 	 */
-	public function handleEvent( MtEvent event ) : Bool; 
+	public function handleEvent( event:MtEvent ) : Bool; 
 
 }

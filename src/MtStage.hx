@@ -1,4 +1,5 @@
 
+
 class MtStage 
 {
 	private var m_Width : Int;
@@ -6,7 +7,7 @@ class MtStage
 	private var m_X : Int;
 	private var m_Y : Int;
 
-	public function new(w,h,x,y)
+	public function new(w:Int,h:Int,x:Int=10,y:Int=10)
 	{
 		m_Width = w;
 		m_Height = h;

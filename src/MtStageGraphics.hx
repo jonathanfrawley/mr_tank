@@ -1,7 +1,8 @@
 
 import flash.display.Shape;
 
-class MtStageGraphics {
+class MtStageGraphics 
+{
 
 	public function new()
 	{

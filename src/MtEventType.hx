@@ -1,9 +1,10 @@
 
 enum MtEventType
 {
-	MT_Event_GameStart;
-	MT_Event_GameEnd;
-	MT_Event_PlayerHit;
-	MT_Event_PlayerDead;
-	MT_Event_DestroyActor;
+	MT_EVENT_GAMELOADED;
+	MT_EVENT_GAMEEND;
+	MT_EVENT_PLAYERHIT;
+	MT_EVENT_PLAYERDEAD;
+	MT_EVENT_DESTROYACTOR;
 }
+
