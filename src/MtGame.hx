@@ -41,7 +41,4 @@ class MtGame extends MtBaseGame
 	public RegisterHit(ActorId sphere)
 	{
 	}
-	
-
-
 }

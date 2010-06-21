@@ -4,36 +4,102 @@ import MtEventManager;
 import MtStage;
 import MtGameLoadedEvent;
 import MtStageConstants;
+import MtEvent;
+import MtIOHandler;
+import MtEventType;
+import MtBaseGame;
+import JfVector2;
+import MtPhysicsHandler;
+import MtEvent;
 
-class MtGameLogic
+class MtGameLogic extends MtBaseGame, implements MtEventListener
 {
 	private var m_GraphicsHandler : MtGraphicsHandler;
+	private var m_PhysicsHandler : MtPhysicsHandler;
+	private var m_IsFinished : Bool;
+	private var m_IOHandler : MtIOHandler;
+	private var m_LifeTime : Float; // How long game has been in session;
+	private var m_StartPosition : JfVector2;
+	private var loopCnt:Int;
 
 	public function new()
 	{
+		super();
 		m_GraphicsHandler = new MtGraphicsHandler();
+		m_IsFinished = false;
+		m_IOHandler = new MtIOHandler();
+		m_PhysicsHandler = new MtPhysicsHandler();
+
+		loopCnt = 0;
 	}
 
 	public function init() : Bool
 	{
 		m_GraphicsHandler.init();
-		MtEventManager.getInstance().addListener(m_GraphicsHandler);
-		var stage = new MtStage( MtStageConstants.SCREEN_WIDTH-20, MtStageConstants.SCREEN_HEIGHT-20);
-		//MtEventManager.getInstance().queueEvent(new MtGameLoadedEvent(stage));
-		MtEventManager.getInstance().trigger(new MtGameLoadedEvent(stage));
+		m_IOHandler.init();
+		m_PhysicsHandler.init();
+
+		addListeners();
+		setupLevel();
+
 		return true;
+	}
+
+	public function addListeners()
+	{
+		//Add all listeners
+		MtEventManager.getInstance().addListener(m_GraphicsHandler);
+		MtEventManager.getInstance().addListener(m_IOHandler);
+		MtEventManager.getInstance().addListener(m_PhysicsHandler);
+		MtEventManager.getInstance().addListener(this);
+	}
+
+	public function setupLevel(levelNum:Int=0)
+	{
+		if (levelNum==0)
+		{
+			//Setup initial Level
+			MtEventManager.getInstance().queueEvent(new MtTankCreatedEvent(new MtTank(10,10)));
+			MtEventManager.getInstance().queueEvent(new MtGameLoadedEvent(new MtStage( MtStageConstants.SCREEN_WIDTH-20, MtStageConstants.SCREEN_HEIGHT-20)));
+		}
 	}
 
 	public function mainLoop() : Bool
 	{
-/*
+		if( m_IsFinished )
+		{
+			return false;
+		}
+
 		if( ! MtEventManager.getInstance().tick() )
 		{
 			return false;
 		}
-*/
 
+		m_PhysicsHandler.step(1.0); //TODO : Adaptive timestep
 		m_GraphicsHandler.display();
+
+		m_IOHandler.poll();
+
+		//loopCnt = loopCnt + 1;
+		//trace("Hi"+ loopCnt);
+
 		return true;
 	}
+
+	public function getName():String
+	{
+		return "MtGameLogic";
+	}
+	
+	
+	public function handleEvent(event:MtEvent):Bool
+	{
+		if(event.getType() == MT_EVENT_GAMEEND)
+		{
+			m_IsFinished = ! m_IsFinished;
+		}
+		return true;
+	}
+	
 }

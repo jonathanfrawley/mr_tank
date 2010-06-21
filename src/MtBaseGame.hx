@@ -3,11 +3,11 @@ import MtGameData;
 
 class MtBaseGame
 {
-	protected m_Data : MtGameData;
+	private var m_Data : MtGameData;
 
 	public function new()
 	{
-		m_Data = new MtGameData;
+		m_Data = new MtGameData();
 	}
 
 }

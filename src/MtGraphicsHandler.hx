@@ -7,20 +7,24 @@ import MtEventListener;
 import MtEventType;
 import MtGameLoadedEvent;
 import MtEventManager;
+import MtTankGraphics;
 
 class MtGraphicsHandler implements MtEventListener
 {
-	private var m_MtStageRef : MtStage;
-	private var m_MtBackgroundGraphics : MtBackgroundGraphics;
-	private var m_MtStageGraphics : MtStageGraphics;
+//	private var m_StageRef : MtStage;
+	private var m_BackgroundGraphics : MtBackgroundGraphics;
+	private var m_StageGraphics : MtStageGraphics;
 	private var m_MovieClip : flash.display.MovieClip;
+//	private var m_PlayerTank:MtTank;
+	private var m_TankGraphics:MtTankGraphics;
  
 	public function new()
 	{
-		m_MtBackgroundGraphics = new MtBackgroundGraphics();
-		m_MtStageGraphics = new MtStageGraphics();
+		m_BackgroundGraphics = new MtBackgroundGraphics();
+		m_StageGraphics = new MtStageGraphics();
         m_MovieClip = flash.Lib.current;
-		m_MtStageRef=null;
+		//m_StageRef=null;
+		m_TankGraphics = new MtTankGraphics();
 	}
 
 	public function getName():String
@@ -31,38 +35,30 @@ class MtGraphicsHandler implements MtEventListener
 	public function init() : Bool
 	{
 //		MtEventManager.getInstance().addListener(this);
+		m_BackgroundGraphics.init();
 		return true;
-	}
-
-	public function setMtStage(m_stage:MtStage)
-	{
-		m_MtStageRef = m_stage;
 	}
 
 	public function display()
 	{
-		m_MtBackgroundGraphics.draw(m_MovieClip);
-		if( m_MtStageRef != null)
-		{
-			m_MtStageGraphics.draw(m_MtStageRef, m_MovieClip);
-		}
+		m_BackgroundGraphics.draw(m_MovieClip);
+		m_StageGraphics.draw(m_MovieClip);
+		m_TankGraphics.draw(m_MovieClip);
 	}
 
 	public function handleEvent(event:MtEvent):Bool
 	{
 		if(event.getType()==MT_EVENT_GAMELOADED)
 		{
-//			var tmp : Dynamic = event;
 			var gameLoadedEvent : MtGameLoadedEvent = cast event;
-		//	var gameLoadedEventData : MtGameLoadedEventData;
-			try {
-//				gameLoadedEvent = tmp;
-		//		tmp = gameLoadedEvent.getData();
-		//		gameLoadedEventData = tmp;
-				setMtStage(gameLoadedEvent.getStage());
-			} catch( msg : String ) {
-				trace("Error occurred: " + msg);
-			}
+//			m_StageRef = gameLoadedEvent.getStage();
+			m_StageGraphics.init(gameLoadedEvent.getStage());
+		}
+		else if(event.getType()==MT_EVENT_TANKCREATED)
+		{
+			var tankCreatedEvent : MtTankCreatedEvent = cast event;
+			//m_PlayerTank = tankCreatedEvent.getTank();	
+			m_TankGraphics.init(tankCreatedEvent.getTank());
 		}
 		return true;
 	}

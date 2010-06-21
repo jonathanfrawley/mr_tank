@@ -8,12 +8,12 @@ class MtGameData
 		m_Score = 0;
 	}
 
-	public getScore()
+	public function getScore():Int
 	{
 		return m_Score;
 	}
 
-	public setScore(score:Int)
+	public function setScore(score:Int)
 	{
 		m_Score = score;
 	}
