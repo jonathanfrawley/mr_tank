@@ -87,12 +87,21 @@ class MtIOHandler implements MtEventListener
 		}
 	}
 
+	public function reportMouseDown(event:flash.events.MouseEvent)
+	{
+		if(event.buttonDown)
+		{
+			MtEventManager.getInstance().trigger(new MtMBLeftPressedEvent());
+		}
+	}
+
 	public function handleEvent(event:MtEvent):Bool
 	{
 		if(event.getType()==MT_EVENT_GAMELOADED)
 		{
 			m_MovieClip.stage.addEventListener(flash.events.KeyboardEvent.KEY_DOWN,reportKeyDown);
 			m_MovieClip.stage.addEventListener(flash.events.KeyboardEvent.KEY_UP,reportKeyUp);
+			m_MovieClip.stage.addEventListener(flash.events.MouseEvent.MOUSE_DOWN,reportMouseDown);
 		}
 	
 		return true;

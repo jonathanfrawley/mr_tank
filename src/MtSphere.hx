@@ -11,7 +11,6 @@ class MtSphere extends MtShape
 		m_Radius = r;
 	}
 
-
 	public function getRadius():Int
 	{
 		return m_Radius;

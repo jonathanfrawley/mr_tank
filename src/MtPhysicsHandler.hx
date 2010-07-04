@@ -17,6 +17,7 @@ import MtConstants;
 import MtCollisionDetector;
 import MtStage;
 import MtGameLoadedEvent;
+import MtBullet;
 
 class MtPhysicsHandler implements MtEventListener
 {
@@ -144,6 +145,12 @@ class MtPhysicsHandler implements MtEventListener
 		else if(event.getType()==MT_EVENT_BUTTONSPRESSED)
 		{
 			m_PlayerTank.setTurretDir(m_PlayerTank.getTurretDir() - Math.PI/8);
+		}
+		else if(event.getType()==MT_EVENT_MBLEFTPRESSED)
+		{
+			var bullet = new MtBullet(m_PlayerTank.getPos().getX(), m_PlayerTank.getPos().getY(), m_PlayerTank.getTurretDir());
+			m_Bodies.add(bullet);
+			MtEventManager.getInstance().trigger(new MtBulletCreatedEvent(bullet));
 		}
 		return true;
 	}
