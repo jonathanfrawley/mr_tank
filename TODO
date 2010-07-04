@@ -1,2 +1,2 @@
 - Go over event code make sure it can't be made easier to add events.
-- Make JfVector2 use Float.
+- DONE - Make JfVector2 use Float.
