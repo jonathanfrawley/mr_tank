@@ -1,4 +1,5 @@
 
+import JfCore;
 import JfVector2;
 import MtPhysicsBody;
 import MtSphere;
@@ -7,11 +8,11 @@ class MtTank extends MtSphere, implements MtPhysicsBody
 {
 //	private var m_Pos:JfVector2;
 	private var m_Dir:JfVector2;
-//	private var m_Radius:Int;
-	private var m_Speed:Int;
-	private var m_TurretDir:Float;
+//	private var m_Radius:JfReal;
+	private var m_Speed:JfReal;
+	private var m_TurretDir:JfReal;
 
-	public function new(x:Int,y:Int)
+	public function new(x:JfReal,y:JfReal)
 	{
 		super(x,y,20);
 		//m_Pos = new JfVector2(x,y);
@@ -22,7 +23,7 @@ class MtTank extends MtSphere, implements MtPhysicsBody
 		m_Speed = 3;
 	}
 
-	public function step(timeStep:Float)
+	public function step(timeStep:JfReal)
 	{
 //		m_Pos = m_Pos.add((m_Dir.multiply(m_Speed)).multiply(timeStep)); //TODO:Does this work okay?
 		m_Pos = m_Pos.add(m_Dir.multiply(Math.ceil(timeStep)));
@@ -38,12 +39,12 @@ class MtTank extends MtSphere, implements MtPhysicsBody
 		m_Dir = dir;
 	}
 
-	public function getTurretDir():Float
+	public function getTurretDir():JfReal
 	{
 		return m_TurretDir;
 	}
 
-	public function setTurretDir(dir:Float):Void
+	public function setTurretDir(dir:JfReal):Void
 	{
 		m_TurretDir = dir;
 	}

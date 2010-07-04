@@ -22,17 +22,10 @@ class MtTankGraphics extends MtInitialisable
 	{
         m_Circle.graphics.beginFill ( 0x990000 );
         m_Circle.graphics.lineStyle ( 1, 0x000000, 1, false, flash.display.LineScaleMode.NONE );
-        //m_Circle.graphics.drawRect ( tank.getPos().getX(), tank.getPos().getY(), tank.getWidth(), m_CircleHeight);
-        m_Circle.graphics.drawCircle ( tank.getPos().getX(), tank.getPos().getY(), tank.getRadius());
+        //m_Circle.graphics.drawCircle ( tank.getPos().getX(), tank.getPos().getY(), tank.getRadius());
+        m_Circle.graphics.drawCircle ( tank.getRadius(), tank.getRadius(), tank.getRadius());
         m_Circle.graphics.endFill();
 		m_StartingPos = tank.getPos();
-/*
-		m_Turret.graphics.beginFill(0x990000);
-        m_Turret.graphics.lineStyle ( 5, 0x000000, 1, false, flash.display.LineScaleMode.NONE );
-		m_Turret.graphics.moveTo(tank.getPos().getX(), tank.getPos().getY());
-		m_Turret.graphics.lineTo(tank.getRadius()*2,tank.getPos().getY());
-		m_Turret.graphics.endFill();
-*/
 		m_Tank = tank;
 		m_IsInit = true;
 	}
@@ -45,8 +38,10 @@ class MtTankGraphics extends MtInitialisable
 			m_Circle.y = m_Tank.getPos().getY();
 			mc.addChild(m_Circle);
 
-			m_Turret.x = m_Tank.getPos().getX()+m_StartingPos.getX();
-			m_Turret.y = m_Tank.getPos().getY()+m_StartingPos.getY();
+			//m_Turret.x = m_Tank.getPos().getX()+m_StartingPos.getX();
+			//m_Turret.y = m_Tank.getPos().getY()+m_StartingPos.getY();
+			m_Turret.x = m_Tank.getPos().getX() + m_Tank.getRadius();
+			m_Turret.y = m_Tank.getPos().getY() + m_Tank.getRadius();
 			m_Turret.graphics.clear();
 			var turretDir:Float = m_Tank.getTurretDir();
 			m_Turret.graphics.beginFill(0x990000);

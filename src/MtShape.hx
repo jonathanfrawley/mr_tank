@@ -1,11 +1,12 @@
 
 import JfVector2;
+import JfCore;
 
 class MtShape
 {
 	private var m_Pos:JfVector2;
 
-	public function new(x:Int, y:Int)
+	public function new(x:JfReal, y:JfReal)
 	{
 		m_Pos = new JfVector2(x,y);
 	}

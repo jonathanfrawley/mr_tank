@@ -16,7 +16,7 @@ class MtGraphicsHandler implements MtEventListener
 	private var m_BackgroundGraphics : MtBackgroundGraphics;
 	private var m_StageGraphics : MtStageGraphics;
 	private var m_MovieClip : flash.display.MovieClip;
-//	private var m_PlayerTank:MtTank;
+	private var m_Tank:MtTank;
 	private var m_TankGraphics:MtTankGraphics;
 	private var m_BulletGraphics:List<MtBulletGraphics>;
  
@@ -64,7 +64,7 @@ class MtGraphicsHandler implements MtEventListener
 		else if(event.getType()==MT_EVENT_TANKCREATED)
 		{
 			var tankCreatedEvent : MtTankCreatedEvent = cast event;
-			//m_PlayerTank = tankCreatedEvent.getTank();	
+			m_Tank = tankCreatedEvent.getTank();	
 			m_TankGraphics.init(tankCreatedEvent.getTank());
 		}
 		else if(event.getType()==MT_EVENT_BULLETCREATED)
@@ -72,7 +72,7 @@ class MtGraphicsHandler implements MtEventListener
 			var bulletCreatedEvent : MtBulletCreatedEvent = cast event;
 			var bullet = bulletCreatedEvent.getBullet();
 			var bulletGraphics = new MtBulletGraphics();
-			bulletGraphics.init(bullet);
+			bulletGraphics.init(bullet, m_Tank);
 			m_BulletGraphics.add(bulletGraphics);
 		}
 		return true;
