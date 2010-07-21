@@ -1,6 +1,7 @@
 
 import MtSphere;
 import MtRectangle;
+import MtPhysicsBody;
 
 class MtCollisionDetector
 {
@@ -10,23 +11,22 @@ class MtCollisionDetector
 	{
 	}
 
-	public function circleWithinRectangle(sphere:MtSphere, rectangle:MtRectangle):Bool
+	public function bodyWithinRectangle(body:MtPhysicsBody, rectangle:MtRectangle):Bool
 	{
-		var xMin = rectangle.getPos().getX();
-		var xMax = rectangle.getPos().getX()+rectangle.getWidth();
-		var yMin = rectangle.getPos().getY();
-		var yMax = rectangle.getPos().getY()+rectangle.getHeight();
-
-		if( ((sphere.getPos().getX()-sphere.getRadius()) < xMin) ||
-			((sphere.getPos().getX()+sphere.getRadius()) > xMax) ||	
-			((sphere.getPos().getY()-sphere.getRadius()) < yMin) ||
-			((sphere.getPos().getY()+sphere.getRadius()) > yMax) )
+		if(body.collidesWithRectangle(rectangle))
 		{
-			trace("Collision");
 			return true;
 		}
 		return false;
+
 	}
+/*
+	public function bodyWithinRectangle(body:MtPhysicsBody, rectangle:MtRectangle):Bool
+	{
+		//Identity collision detection
+		return false;
+	}
+*/
 
 	static public function getInstance() : MtCollisionDetector
 	{

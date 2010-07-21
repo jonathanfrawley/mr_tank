@@ -37,6 +37,11 @@ class JfVector2
 		return new JfVector2(m_X+other.getX(), m_Y+other.getY());
 	}
 
+	public function subtract(other:JfVector2):JfVector2
+	{
+		return new JfVector2(m_X-other.getX(), m_Y-other.getY());
+	}
+
 	public function multiply(scalar:JfReal):JfVector2
 	{
 		return new JfVector2(m_X*scalar, m_Y*scalar);
@@ -51,6 +56,13 @@ class JfVector2
 	{
 		var mag:JfReal = magnitude();
 		return new JfVector2(m_X/mag, m_Y/mag);
+	}
+
+	public function normalize():Void
+	{
+		var mag:JfReal = magnitude();
+		m_X = (m_X/mag);
+		m_Y = (m_Y/mag);
 	}
 	
 	

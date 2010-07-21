@@ -6,10 +6,10 @@ class MtTankGraphics extends MtInitialisable
 {
     private var m_Circle : flash.display.Shape;
 	private var m_Turret : flash.display.Shape;
-    private static var m_CircleWidth = 50;
-    private static var m_CircleHeight = 50;
+//    private static var m_CircleWidth = 50;
+//    private static var m_CircleHeight = 50;
 	private var m_Tank:MtTank;
-	private var m_StartingPos:JfVector2;
+//	private var m_StartingPos:JfVector2;
 
 	public function new()
 	{
@@ -25,7 +25,7 @@ class MtTankGraphics extends MtInitialisable
         //m_Circle.graphics.drawCircle ( tank.getPos().getX(), tank.getPos().getY(), tank.getRadius());
         m_Circle.graphics.drawCircle ( tank.getRadius(), tank.getRadius(), tank.getRadius());
         m_Circle.graphics.endFill();
-		m_StartingPos = tank.getPos();
+//		m_StartingPos = tank.getPos();
 		m_Tank = tank;
 		m_IsInit = true;
 	}

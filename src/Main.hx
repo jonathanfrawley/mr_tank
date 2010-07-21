@@ -21,11 +21,6 @@ class Main
 		if( m_GameApp.init() )
 		{
 			flash.Lib.current.addEventListener(flash.events.Event.ENTER_FRAME, mainLoop);
-/*
-			while(m_GameApp.mainLoop())
-			{
-			}
- */
 		}
 	}    
 

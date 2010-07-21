@@ -20,4 +20,5 @@ class MtShape
 	{
 		m_Pos = pos;
 	}
+
 }

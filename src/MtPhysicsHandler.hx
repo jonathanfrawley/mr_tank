@@ -1,4 +1,5 @@
 
+import JfVector2;
 import MtPhysicsBody;
 import MtTank;
 import MtEvent;
@@ -40,6 +41,10 @@ class MtPhysicsHandler implements MtEventListener
 		for(body in m_Bodies)
 		{
 			body.step(timeStep);
+			if(MtCollisionDetector.getInstance().bodyWithinRectangle(body, m_Stage))
+			{
+				body.wallCollisionResponse();	
+			}	
 		}
 		//Collision Detection
 /*
@@ -148,7 +153,17 @@ class MtPhysicsHandler implements MtEventListener
 		}
 		else if(event.getType()==MT_EVENT_MBLEFTPRESSED)
 		{
-			var bullet = new MtBullet(m_PlayerTank.getPos().getX(), m_PlayerTank.getPos().getY(), m_PlayerTank.getTurretDir());
+			var event : MtMBLeftPressedEvent = cast event;
+			//var bullet = new MtBullet(m_PlayerTank.getPos().getX(), m_PlayerTank.getPos().getY(), m_PlayerTank.getTurretDir());
+			var dir : JfVector2 = event.getPos().subtract(m_PlayerTank.getCentrePos());
+//			var dir : JfVector2 = m_PlayerTank.getPos().subtract(event.getPos());
+			dir.normalize();
+			var dirAngle : Float = Math.atan2(dir.getY(),dir.getX());
+//			var dirAngle : Float = Math.asin(dir.getY());
+//			var dirAngle : Float = 1;
+			m_PlayerTank.setTurretDir(dirAngle);
+			var bullet = new MtBullet(m_PlayerTank.getPos().getX(), m_PlayerTank.getPos().getY(), m_PlayerTank.getTurretDir(), m_PlayerTank.getRadius());
+//			var bullet = new MtBullet(m_PlayerTank.getPos().getX(), m_PlayerTank.getPos().getY(), dirAngle);
 			m_Bodies.add(bullet);
 			MtEventManager.getInstance().trigger(new MtBulletCreatedEvent(bullet));
 		}

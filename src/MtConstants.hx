@@ -5,3 +5,4 @@ enum MtPlayerConstant
 	MT_AI_0;
 }
 
+

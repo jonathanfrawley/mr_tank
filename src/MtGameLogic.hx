@@ -1,4 +1,6 @@
 
+import flash.events.MouseEvent;
+
 import MtGraphicsHandler;
 import MtEventManager;
 import MtStage;
@@ -21,6 +23,15 @@ class MtGameLogic extends MtBaseGame, implements MtEventListener
 	private var m_LifeTime : Float; // How long game has been in session;
 	private var m_StartPosition : JfVector2;
 	private var loopCnt:Int;
+/*
+	static public var TEMP:Float = -1;
+
+	public static function setTEMP(t:Float)
+	{
+		TEMP = t;
+	}
+*/
+
 
 	public function new()
 	{
@@ -59,7 +70,7 @@ class MtGameLogic extends MtBaseGame, implements MtEventListener
 		if (levelNum==0)
 		{
 			//Setup initial Level
-			MtEventManager.getInstance().queueEvent(new MtTankCreatedEvent(new MtTank(10,10)));
+			MtEventManager.getInstance().queueEvent(new MtTankCreatedEvent(new MtTank(40,40)));
 			MtEventManager.getInstance().queueEvent(new MtGameLoadedEvent(new MtStage( MtStageConstants.SCREEN_WIDTH-20, MtStageConstants.SCREEN_HEIGHT-20)));
 		}
 	}
@@ -80,7 +91,14 @@ class MtGameLogic extends MtBaseGame, implements MtEventListener
 		m_GraphicsHandler.display();
 
 		m_IOHandler.poll();
-
+/*
+		if(TEMP != -1)
+		{
+			trace("Hi" + TEMP);
+			TEMP = -1;
+		}
+*/
+//		trace("Hi" + flash.events.MouseEvent.stageX(1,null));
 		//loopCnt = loopCnt + 1;
 		//trace("Hi"+ loopCnt);
 

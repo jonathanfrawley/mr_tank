@@ -90,8 +90,9 @@ class MtIOHandler implements MtEventListener
 	public function reportMouseDown(event:flash.events.MouseEvent)
 	{
 		if(event.buttonDown)
-		{
-			MtEventManager.getInstance().trigger(new MtMBLeftPressedEvent());
+		{ 	
+			//MtGameLogic.setTEMP(event.localX);
+			MtEventManager.getInstance().trigger(new MtMBLeftPressedEvent(event.stageX, event.stageY));
 		}
 	}
 
