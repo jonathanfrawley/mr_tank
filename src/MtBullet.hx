@@ -11,9 +11,9 @@ class MtBullet extends MtPhysicsSphere
 //	private var m_Speed:JfReal;
 	private var m_TankRadius:JfReal;
 
-	public function new(x:JfReal, y:JfReal, dir:JfReal, radiusTank:JfReal)
+	public function new(x:JfReal, y:JfReal, dir:JfReal, radiusTank:JfReal, radius:JfReal)
 	{
-		super(x,y,dir,2,5);
+		super(x,y,dir,2,radius);
 		m_TankRadius = radiusTank;
 
 //		super(160.0,160.0,5);

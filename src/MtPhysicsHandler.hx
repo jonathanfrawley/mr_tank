@@ -45,8 +45,17 @@ class MtPhysicsHandler implements MtEventListener
 			{
 				body.wallCollisionResponse();	
 			}	
+			if(body.getActorID() != m_PlayerTank.getActorID())
+			{
+				if(MtCollisionDetector.getInstance().bodyWithinSphere(body, m_PlayerTank))
+				{
+					trace("Collision with tank");
+					MtEventManager.getInstance().queueEvent(new MtTankBulletCollisionEvent(m_PlayerTank, cast body));
+				}
+			}
 		}
 		//Collision Detection
+
 /*
 		if(! MtCollisionDetector.getInstance().circleWithinRectangle(m_PlayerTank,m_Stage))
 		{
@@ -154,16 +163,16 @@ class MtPhysicsHandler implements MtEventListener
 		else if(event.getType()==MT_EVENT_MBLEFTPRESSED)
 		{
 			var event : MtMBLeftPressedEvent = cast event;
-			//var bullet = new MtBullet(m_PlayerTank.getPos().getX(), m_PlayerTank.getPos().getY(), m_PlayerTank.getTurretDir());
 			var dir : JfVector2 = event.getPos().subtract(m_PlayerTank.getCentrePos());
-//			var dir : JfVector2 = m_PlayerTank.getPos().subtract(event.getPos());
 			dir.normalize();
 			var dirAngle : Float = Math.atan2(dir.getY(),dir.getX());
-//			var dirAngle : Float = Math.asin(dir.getY());
-//			var dirAngle : Float = 1;
+			var radius : Float = 3; //XXX:Magic number
+			
+			var startPos:JfVector2 = new JfVector2(m_PlayerTank.getPos().getX() + ((m_PlayerTank.getRadius()+radius) * Math.cos(dirAngle))
+													, m_PlayerTank.getPos().getY() + ((m_PlayerTank.getRadius()+radius) * Math.sin(dirAngle)));
 			m_PlayerTank.setTurretDir(dirAngle);
-			var bullet = new MtBullet(m_PlayerTank.getPos().getX(), m_PlayerTank.getPos().getY(), m_PlayerTank.getTurretDir(), m_PlayerTank.getRadius());
-//			var bullet = new MtBullet(m_PlayerTank.getPos().getX(), m_PlayerTank.getPos().getY(), dirAngle);
+			//var bullet = new MtBullet(m_PlayerTank.getPos().getX(), m_PlayerTank.getPos().getY(), m_PlayerTank.getTurretDir(), m_PlayerTank.getRadius(), radius);
+			var bullet = new MtBullet(startPos.getX(), startPos.getY(), m_PlayerTank.getTurretDir(), m_PlayerTank.getRadius(), radius);
 			m_Bodies.add(bullet);
 			MtEventManager.getInstance().trigger(new MtBulletCreatedEvent(bullet));
 		}

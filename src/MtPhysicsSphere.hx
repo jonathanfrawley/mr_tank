@@ -1,16 +1,19 @@
 import JfCore;
+import MtCore;
 
 
 class MtPhysicsSphere extends MtSphere, implements MtPhysicsBody
 {
-	private var m_Dir:JfReal;
-	private var m_Speed:JfReal;
+	private var m_Dir : JfReal;
+	private var m_Speed : JfReal;
+	private var m_ActorID : MtActorID;
 
 	public function new(x:JfReal, y:JfReal, dir:JfReal, speed:JfReal, radius:JfReal)
 	{
 		super(x,y,radius);
 		m_Dir = dir;
 		m_Speed = speed;
+		setActorID(MtActorIDGenerator.getInstance().getNext());
 	}
 
 	public function step(timeStep:Float):Void
@@ -44,6 +47,25 @@ class MtPhysicsSphere extends MtSphere, implements MtPhysicsBody
 		return false;
 	}
 
+	public function collidesWithSphere(sphere:MtSphere):Bool
+	{
+		var myX = m_Pos.getX();
+		var myY = m_Pos.getY();
+		var sphereX = sphere.getPos().getX();	
+		var sphereY = sphere.getPos().getY();
+		var radiusSquared = m_Radius * m_Radius;
+		var xs = sphereX - myX;
+		var ys = sphereY - myY;
+		if( radiusSquared < ((xs * xs) + (ys * ys)) )
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	public function getDir():JfReal
 	{
 		return m_Dir;
@@ -53,4 +75,15 @@ class MtPhysicsSphere extends MtSphere, implements MtPhysicsBody
 	{
 		m_Dir = dir;
 	}
+
+	public function setActorID(id:MtActorID):Void
+	{
+		m_ActorID = id;
+	}
+
+	public function getActorID():MtActorID
+	{
+		return m_ActorID;
+	}
+
 }

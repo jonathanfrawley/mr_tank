@@ -1,3 +1,3 @@
 
-typedef Int MtActorId;
+typedef MtActorID = Int;
 

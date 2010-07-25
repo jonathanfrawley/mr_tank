@@ -20,6 +20,17 @@ class MtCollisionDetector
 		return false;
 
 	}
+
+	public function bodyWithinSphere(body:MtPhysicsBody, sphere:MtSphere):Bool
+	{
+		if(body.collidesWithSphere(sphere))
+		{
+			return true;
+		}
+		return false;
+
+	}
+
 /*
 	public function bodyWithinRectangle(body:MtPhysicsBody, rectangle:MtRectangle):Bool
 	{

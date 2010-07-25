@@ -1,7 +1,8 @@
+import MtCore;
 
 interface MtActor
 {
-	function setId(id:Int);
-	function 
-	
+	private var m_ActorID : MtActorID;
+	public function setActorID(id:MtActorID):Void;
+	public function getActorID():MtActorID;
 }

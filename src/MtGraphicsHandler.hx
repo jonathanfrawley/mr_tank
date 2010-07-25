@@ -19,6 +19,7 @@ class MtGraphicsHandler implements MtEventListener
 	private var m_Tank:MtTank;
 	private var m_TankGraphics:MtTankGraphics;
 	private var m_BulletGraphics:List<MtBulletGraphics>;
+	private var m_IsEndScreen:Bool;
  
 	public function new()
 	{
@@ -28,6 +29,7 @@ class MtGraphicsHandler implements MtEventListener
 		//m_StageRef=null;
 		m_TankGraphics = new MtTankGraphics();
 		m_BulletGraphics = new List<MtBulletGraphics>();
+		m_IsEndScreen = false;
 	}
 
 	public function getName():String
@@ -44,13 +46,25 @@ class MtGraphicsHandler implements MtEventListener
 
 	public function display()
 	{
-		m_BackgroundGraphics.draw(m_MovieClip);
-		m_StageGraphics.draw(m_MovieClip);
-		m_TankGraphics.draw(m_MovieClip);
-		for(bulletGraphics in m_BulletGraphics)
+		if( ! m_IsEndScreen )
 		{
-			bulletGraphics.draw(m_MovieClip);
+			m_BackgroundGraphics.draw(m_MovieClip);
+			m_StageGraphics.draw(m_MovieClip);
+			m_TankGraphics.draw(m_MovieClip);
+			for(bulletGraphics in m_BulletGraphics)
+			{
+				bulletGraphics.draw(m_MovieClip);
+			}
 		}
+		else
+		{
+			m_BackgroundGraphics.draw(m_MovieClip);
+		}
+	}
+
+	public function setEndScreen()
+	{
+		m_IsEndScreen = true;
 	}
 
 	public function handleEvent(event:MtEvent):Bool
@@ -74,6 +88,14 @@ class MtGraphicsHandler implements MtEventListener
 			var bulletGraphics = new MtBulletGraphics();
 			bulletGraphics.init(bullet, m_Tank);
 			m_BulletGraphics.add(bulletGraphics);
+		}
+		else if(event.getType() == MT_EVENT_TANK_BULLET_COLLISION)
+		{
+			var event : MtTankBulletCollisionEvent = cast event;
+			var bullet : MtBullet = event.getBullet();
+			var tank :MtTank = event.getTank();
+			//TODO : Delete Tank and bullet
+			setEndScreen();
 		}
 		return true;
 	}
