@@ -53,10 +53,11 @@ class MtPhysicsSphere extends MtSphere, implements MtPhysicsBody
 		var myY = m_Pos.getY();
 		var sphereX = sphere.getPos().getX();	
 		var sphereY = sphere.getPos().getY();
-		var radiusSquared = m_Radius * m_Radius;
+		//var radiusSquared = m_Radius * m_Radius;
+		var radiusSquared = sphere.getRadius() * sphere.getRadius();
 		var xs = sphereX - myX;
 		var ys = sphereY - myY;
-		if( radiusSquared < ((xs * xs) + (ys * ys)) )
+		if( radiusSquared > ((xs * xs) + (ys * ys)) )
 		{
 			return true;
 		}
