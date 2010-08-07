@@ -24,6 +24,35 @@ class MtPhysicsSphere extends MtSphere, implements MtPhysicsBody
 
 	public function wallCollisionResponse():Void
 	{
+/**
+		***NB:Can't do this, need to know normal direction.
+		*** Need to get passed in contact information here.
+		var cosDir = Math.cos(m_Dir);
+		var sinDir = Math.sin(m_Dir);
+		var tanDir = Math.tan(m_Dir);
+		//determine quadrant and adjust angle accordingly
+		if((cosDir > 0) && (sinDir > 0) && (tanDir > 0))
+		{
+			m_Dir = m_Dir + (Math.PI/2);
+		}
+		else if((cosDir < 0) && (sinDir > 0) && (tanDir < 0))
+		{
+			m_Dir = m_Dir - (Math.PI/2);
+		}
+		else if((cosDir < 0) && (sinDir < 0) && (tanDir > 0))
+		{
+			m_Dir = m_Dir + (Math.PI/2);
+		}
+		else if((cosDir > 0) && (sinDir < 0) && (tanDir < 0))
+		{
+			//m_Dir = m_Dir - (Math.PI/2);
+			m_Dir = m_Dir + Math.PI;
+		}	
+		else
+		{
+			m_Dir = m_Dir - Math.PI;
+		}
+**/
 		m_Dir = m_Dir - Math.PI;
 		step(1);
 	}

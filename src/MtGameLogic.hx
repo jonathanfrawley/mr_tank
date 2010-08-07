@@ -18,6 +18,7 @@ class MtGameLogic extends MtBaseGame, implements MtEventListener
 {
 	private var m_GraphicsHandler : MtGraphicsHandler;
 	private var m_PhysicsHandler : MtPhysicsHandler;
+	private var m_AIHandler : MtAIHandler;
 	private var m_IsFinished : Bool;
 	private var m_IOHandler : MtIOHandler;
 	private var m_LifeTime : Float; // How long game has been in session;
@@ -40,6 +41,7 @@ class MtGameLogic extends MtBaseGame, implements MtEventListener
 		m_IsFinished = false;
 		m_IOHandler = new MtIOHandler();
 		m_PhysicsHandler = new MtPhysicsHandler();
+		m_AIHandler = new MtAIHandler();
 
 		loopCnt = 0;
 	}
@@ -49,6 +51,7 @@ class MtGameLogic extends MtBaseGame, implements MtEventListener
 		m_GraphicsHandler.init();
 		m_IOHandler.init();
 		m_PhysicsHandler.init();
+		m_AIHandler.init();
 
 		addListeners();
 		setupLevel();
@@ -72,6 +75,8 @@ class MtGameLogic extends MtBaseGame, implements MtEventListener
 			//Setup initial Level
 			MtEventManager.getInstance().queueEvent(new MtTankCreatedEvent(new MtTank(40,40)));
 			MtEventManager.getInstance().queueEvent(new MtGameLoadedEvent(new MtStage( MtStageConstants.SCREEN_WIDTH-20, MtStageConstants.SCREEN_HEIGHT-20)));
+
+			MtEventManager.getInstance().queueEvent(new MtEnemyTankCreatedEvent(new MtTank(80,80)));
 		}
 	}
 
@@ -87,6 +92,7 @@ class MtGameLogic extends MtBaseGame, implements MtEventListener
 			return false;
 		}
 
+		m_AIHandler.step();
 		m_PhysicsHandler.step(1.0); //TODO : Adaptive timestep
 		m_GraphicsHandler.display();
 

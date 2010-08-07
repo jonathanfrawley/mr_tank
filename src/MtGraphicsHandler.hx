@@ -19,6 +19,7 @@ class MtGraphicsHandler implements MtEventListener
 	private var m_Tank:MtTank;
 	private var m_TankGraphics:MtTankGraphics;
 	private var m_BulletGraphics:List<MtBulletGraphics>;
+	private var m_EnemyTanksGraphics:List<MtTankGraphics>;
 	private var m_IsEndScreen:Bool;
  
 	public function new()
@@ -29,6 +30,7 @@ class MtGraphicsHandler implements MtEventListener
 		//m_StageRef=null;
 		m_TankGraphics = new MtTankGraphics();
 		m_BulletGraphics = new List<MtBulletGraphics>();
+		m_EnemyTanksGraphics = new List<MtTankGraphics>();
 		m_IsEndScreen = false;
 	}
 
@@ -55,6 +57,10 @@ class MtGraphicsHandler implements MtEventListener
 			{
 				bulletGraphics.draw(m_MovieClip);
 			}
+			for(enemyTankGraphics in m_EnemyTanksGraphics)
+			{
+				enemyTankGraphics.draw(m_MovieClip);
+			}
 		}
 		else
 		{
@@ -80,6 +86,13 @@ class MtGraphicsHandler implements MtEventListener
 			var tankCreatedEvent : MtTankCreatedEvent = cast event;
 			m_Tank = tankCreatedEvent.getTank();	
 			m_TankGraphics.init(tankCreatedEvent.getTank());
+		}
+		else if(event.getType()==MT_EVENT_ENEMYTANKCREATED)
+		{
+			var event : MtEnemyTankCreatedEvent = cast event;
+			var enemyTankGraphics = new MtTankGraphics();
+			enemyTankGraphics.init(event.getTank());	
+			m_EnemyTanksGraphics.add(enemyTankGraphics);
 		}
 		else if(event.getType()==MT_EVENT_BULLETCREATED)
 		{

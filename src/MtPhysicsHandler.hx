@@ -23,6 +23,7 @@ import MtBullet;
 class MtPhysicsHandler implements MtEventListener
 {
 	private var m_Bodies:List<MtPhysicsBody>;
+	private var m_EnemyTanks:List<MtTank>;
 	private var m_PlayerTank:MtTank;
 	private var m_Stage:MtStage;
 	
@@ -175,6 +176,24 @@ class MtPhysicsHandler implements MtEventListener
 			var bullet = new MtBullet(startPos.getX(), startPos.getY(), m_PlayerTank.getTurretDir(), m_PlayerTank.getRadius(), radius);
 			m_Bodies.add(bullet);
 			MtEventManager.getInstance().trigger(new MtBulletCreatedEvent(bullet));
+		}
+		else if(event.getType()==MT_EVENT_MOUSEMOVED)
+		{
+			var event : MtMouseMovedEvent = cast event;
+			var dir : JfVector2 = event.getPos().subtract(m_PlayerTank.getCentrePos());
+			dir.normalize();
+			var dirAngle : Float = Math.atan2(dir.getY(),dir.getX());
+			var radius : Float = 3; //XXX:Magic number
+			
+			var startPos:JfVector2 = new JfVector2(m_PlayerTank.getPos().getX() + ((m_PlayerTank.getRadius()+radius) * Math.cos(dirAngle))
+													, m_PlayerTank.getPos().getY() + ((m_PlayerTank.getRadius()+radius) * Math.sin(dirAngle)));
+			m_PlayerTank.setTurretDir(dirAngle);
+		}
+		else if(event.getType()==MT_EVENT_ENEMYTANKCREATED)
+		{
+			var event : MtEnemyTankCreatedEvent = cast event;
+			m_EnemyTanks.add(event.getTank());	
+			m_Bodies.add(event.getTank());	
 		}
 		return true;
 	}
