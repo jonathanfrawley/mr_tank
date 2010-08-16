@@ -26,19 +26,32 @@ class MtPhysicsHandler implements MtEventListener
 	private var m_EnemyTanks:List<MtTank>;
 	private var m_PlayerTank:MtTank;
 	private var m_Stage:MtStage;
+	private var m_HaxeWorld:phx.World;
 	
 	public function new()
 	{
 		m_Bodies = new List();
+
+		//Setup haxe world
+		var size = new phx.col.AABB(-1000,-1000,1000,1000); 
+		// create the broadphase : this is the algorithm used to optimize collision detection 
+		var bf = new phx.col.SortedList();
+		m_HaxeWorld = new phx.World(size, bf);	
+		// setup gravity
 	}
 
 	public function init():Bool
 	{
+		m_HaxeWorld.gravity = new phx.Vector(0,0.9);
+        var floor = phx.Shape.makeBox(270,50,0,280);
+		m_HaxeWorld.addStaticShape(floor);
+
 		return true;
 	}
 
 	public function step(timeStep:Float)
 	{
+/*
 		for(body in m_Bodies)
 		{
 			body.step(timeStep);
@@ -56,19 +69,9 @@ class MtPhysicsHandler implements MtEventListener
 			}
 		}
 		//Collision Detection
+ */
+		m_HaxeWorld.step(1,20);
 
-/*
-		if(! MtCollisionDetector.getInstance().circleWithinRectangle(m_PlayerTank,m_Stage))
-		{
-			trace("Tank outside wall");	
-		}
-*/
-		//trace("Tank outside wall");	
-
-		//Collision Response TODO
-
-	//	m_PlayerTank.setTurretDir(m_PlayerTank.getTurretDir().add(new JfVector2(0,1)));
-//		m_PlayerTank.setTurretDir(m_PlayerTank.getTurretDir() + 1);
 	}
 
 	public function getName():String
@@ -83,6 +86,7 @@ class MtPhysicsHandler implements MtEventListener
 			var tankCreatedEvent : MtTankCreatedEvent = cast event;
 			m_PlayerTank = tankCreatedEvent.getTank();	
 			m_Bodies.add(m_PlayerTank);
+			m_HaxeWorld.addBody(m_PlayerTank.getBody());
 		}
 		else if(event.getType()==MT_EVENT_UPPRESSED)
 		{
@@ -175,6 +179,7 @@ class MtPhysicsHandler implements MtEventListener
 			//var bullet = new MtBullet(m_PlayerTank.getPos().getX(), m_PlayerTank.getPos().getY(), m_PlayerTank.getTurretDir(), m_PlayerTank.getRadius(), radius);
 			var bullet = new MtBullet(startPos.getX(), startPos.getY(), m_PlayerTank.getTurretDir(), m_PlayerTank.getRadius(), radius);
 			m_Bodies.add(bullet);
+			m_HaxeWorld.addBody(bullet.getBody());
 			MtEventManager.getInstance().trigger(new MtBulletCreatedEvent(bullet));
 		}
 		else if(event.getType()==MT_EVENT_MOUSEMOVED)
@@ -194,6 +199,8 @@ class MtPhysicsHandler implements MtEventListener
 			var event : MtEnemyTankCreatedEvent = cast event;
 			m_EnemyTanks.add(event.getTank());	
 			m_Bodies.add(event.getTank());	
+
+			m_HaxeWorld.addBody(event.getTank().getBody());
 		}
 		return true;
 	}
