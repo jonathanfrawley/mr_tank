@@ -14,7 +14,7 @@ class MtTank extends MtPhysicsSphere
 
 	public function new(x:JfReal,y:JfReal)
 	{
-		super(x,y,0,0,20);
+		super(x,y,0,2,20);
 		//m_Pos = new JfVector2(x,y);
 		//m_Radius = 20;
 		//m_TurretDir = new JfVector2(1,0);
@@ -60,9 +60,12 @@ class MtTank extends MtPhysicsSphere
 
 	public function upPressed()
 	{
-		//m_Dir.setY(-m_Speed);
-		m_Dir = - Math.PI / 2;
-		m_Speed = MT_THROTTLE_SPEED;
+//		m_Dir = - Math.PI / 2;
+//		m_Speed = MT_THROTTLE_SPEED;
+
+		trace("Hello");
+		trace(m_HaxeBody);
+		m_HaxeBody.setSpeed(10 , MT_THROTTLE_SPEED*100);
 	}
 
 	public function upDepressed()

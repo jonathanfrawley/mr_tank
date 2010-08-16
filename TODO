@@ -1,2 +1,4 @@
 - Go over event code make sure it can't be made easier to add events.
 - DONE - Make JfVector2 use Float.
+
+- Finish Adding in Haxe, modify getCentrePos(), Move haxe stuff from PhysicsSphere to higher up in hierarchy. Fix stuff!

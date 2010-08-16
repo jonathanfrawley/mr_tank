@@ -94,7 +94,7 @@ class MtGameLogic extends MtBaseGame, implements MtEventListener
 
 		m_AIHandler.step();
 		m_PhysicsHandler.step(1.0); //TODO : Adaptive timestep
-		m_GraphicsHandler.display();
+	//	m_GraphicsHandler.display();
 
 		m_IOHandler.poll();
 /*

@@ -42,7 +42,7 @@ class MtPhysicsHandler implements MtEventListener
 
 	public function init():Bool
 	{
-		m_HaxeWorld.gravity = new phx.Vector(0,0.9);
+		//m_HaxeWorld.gravity = new phx.Vector(0,0.9);
         var floor = phx.Shape.makeBox(270,50,0,280);
 		m_HaxeWorld.addStaticShape(floor);
 
@@ -86,10 +86,15 @@ class MtPhysicsHandler implements MtEventListener
 			var tankCreatedEvent : MtTankCreatedEvent = cast event;
 			m_PlayerTank = tankCreatedEvent.getTank();	
 			m_Bodies.add(m_PlayerTank);
+
 			m_HaxeWorld.addBody(m_PlayerTank.getBody());
+
+			//XXX:Remove DEBUG
+			m_PlayerTank.getBody().setSpeed(10,10);
 		}
 		else if(event.getType()==MT_EVENT_UPPRESSED)
 		{
+			m_PlayerTank.getBody().setSpeed(10,10);
 			var upPressedEvent : MtUpPressedEvent = cast event;
 			if(upPressedEvent.getPlayer() == MT_PLAYER_0)
 			{

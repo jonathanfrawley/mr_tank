@@ -75,6 +75,11 @@ class MtPhysicsSphere extends MtSphere, implements MtPhysicsBody
 		return new JfVector2(m_HaxeBody.x, m_HaxeBody.y);
 	}
 
+	public override function getCentrePos()
+	{
+		return new JfVector2(m_HaxeBody.x, m_HaxeBody.y);
+	}
+
 	public function collidesWithRectangle(rectangle:MtRectangle):Bool
 	{
 		var xMin = rectangle.getPos().getX();
@@ -116,8 +121,15 @@ class MtPhysicsSphere extends MtSphere, implements MtPhysicsBody
 
 	public function getDir():JfReal
 	{
+		return m_HaxeBody.a;
+	}
+
+/*
+	public function getDir():JfReal
+	{
 		return m_Dir;
 	}
+*/
 
 	public function setDir(dir:JfReal)
 	{
