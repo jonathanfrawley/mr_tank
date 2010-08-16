@@ -68,7 +68,10 @@ class MtTank extends MtPhysicsSphere
 	public function upDepressed()
 	{
 		//m_Dir.setY(0);
-		m_Speed = 0;
+		if(m_Dir== -Math.PI / 2)
+		{
+			m_Speed = 0;
+		}
 	}
 
 	public function downPressed()
@@ -81,7 +84,10 @@ class MtTank extends MtPhysicsSphere
 	public function downDepressed()
 	{
 	//	m_Dir.setY(0);
-		m_Speed = 0;
+		if(m_Dir== Math.PI / 2)
+		{
+			m_Speed = 0;
+		}
 	}
 
 	public function leftPressed()
@@ -94,7 +100,11 @@ class MtTank extends MtPhysicsSphere
 	public function leftDepressed()
 	{
 //		m_Dir.setX(0);
-		m_Speed = 0;
+
+		if(m_Dir==Math.PI)
+		{
+			m_Speed = 0;
+		}
 	}
 
 	public function rightPressed()
@@ -107,6 +117,9 @@ class MtTank extends MtPhysicsSphere
 	public function rightDepressed()
 	{
 //		m_Dir.setX(0);
-		m_Speed = 0;
+		if( m_Dir == 0 )
+		{
+			m_Speed = 0;
+		}
 	}
 }

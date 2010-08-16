@@ -96,6 +96,13 @@ class MtIOHandler implements MtEventListener
 		}
 	}
 
+	public function reportMouseMove(event : flash.events.MouseEvent)
+	{
+		//TODO:Make check to see if mouse has actually moved first.
+		MtEventManager.getInstance().queueEvent(new MtMouseMovedEvent(event.stageX, event.stageY));
+	}
+
+
 	public function handleEvent(event:MtEvent):Bool
 	{
 		if(event.getType()==MT_EVENT_GAMELOADED)
@@ -103,6 +110,7 @@ class MtIOHandler implements MtEventListener
 			m_MovieClip.stage.addEventListener(flash.events.KeyboardEvent.KEY_DOWN,reportKeyDown);
 			m_MovieClip.stage.addEventListener(flash.events.KeyboardEvent.KEY_UP,reportKeyUp);
 			m_MovieClip.stage.addEventListener(flash.events.MouseEvent.MOUSE_DOWN,reportMouseDown);
+			m_MovieClip.stage.addEventListener(flash.events.MouseEvent.MOUSE_MOVE,reportMouseMove);
 		}
 	
 		return true;
