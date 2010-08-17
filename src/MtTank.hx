@@ -63,66 +63,84 @@ class MtTank extends MtPhysicsSphere
 //		m_Dir = - Math.PI / 2;
 //		m_Speed = MT_THROTTLE_SPEED;
 
-		trace("Hello");
-		trace(m_HaxeBody);
-		m_HaxeBody.setSpeed(10 , MT_THROTTLE_SPEED*100);
+//		trace("Hello UP PRESSED"); 
+//		trace(m_HaxeBody);
+		m_HaxeBody.setSpeed(0 , -MT_THROTTLE_SPEED);
+//		m_HaxeBody.f = new phx.Vector(10 , MT_THROTTLE_SPEED*100);
 	}
 
 	public function upDepressed()
 	{
 		//m_Dir.setY(0);
+/*
 		if(m_Dir== -Math.PI / 2)
 		{
 			m_Speed = 0;
 		}
+*/
+
+		m_HaxeBody.setSpeed(0 , 0);
 	}
 
 	public function downPressed()
 	{
 //		m_Dir.setY(m_Speed);
-		m_Dir = Math.PI / 2;
-		m_Speed = MT_THROTTLE_SPEED;
+//		m_Dir = Math.PI / 2;
+//		m_Speed = MT_THROTTLE_SPEED;
+
+		m_HaxeBody.setSpeed(0 , MT_THROTTLE_SPEED);
 	}
 
 	public function downDepressed()
 	{
 	//	m_Dir.setY(0);
-		if(m_Dir== Math.PI / 2)
-		{
-			m_Speed = 0;
-		}
+//		if(m_Dir== Math.PI / 2)
+//		{
+//			m_Speed = 0;
+//		}
+
+		m_HaxeBody.setSpeed(0 , 0);
 	}
 
 	public function leftPressed()
 	{
 		//m_Dir.setX(-m_Speed);
-		m_Dir = Math.PI;
-		m_Speed = MT_THROTTLE_SPEED;
+//		m_Dir = Math.PI;
+//		m_Speed = MT_THROTTLE_SPEED;
+
+		m_HaxeBody.setSpeed(-MT_THROTTLE_SPEED , 0);
 	}
 
 	public function leftDepressed()
 	{
 //		m_Dir.setX(0);
-
+/*
 		if(m_Dir==Math.PI)
 		{
 			m_Speed = 0;
 		}
+*/
+
+		m_HaxeBody.setSpeed(0 , 0);
 	}
 
 	public function rightPressed()
 	{
 //		m_Dir.setX(m_Speed);
-		m_Dir = 0;
-		m_Speed = MT_THROTTLE_SPEED;
+//		m_Dir = 0;
+//		m_Speed = MT_THROTTLE_SPEED;
+
+		m_HaxeBody.setSpeed(MT_THROTTLE_SPEED , 0);
 	}
 
 	public function rightDepressed()
 	{
 //		m_Dir.setX(0);
-		if( m_Dir == 0 )
-		{
-			m_Speed = 0;
-		}
+//		if( m_Dir == 0 )
+//		{
+//			m_Speed = 0;
+//		}
+
+		m_HaxeBody.setSpeed(0 , 0);
 	}
 }

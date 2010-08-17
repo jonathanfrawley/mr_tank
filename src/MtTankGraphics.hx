@@ -1,5 +1,4 @@
 
-import MtInitialisable;
 import JfVector2;
 
 class MtTankGraphics extends MtInitialisable
@@ -34,14 +33,17 @@ class MtTankGraphics extends MtInitialisable
 	{
 		if(m_IsInit)
 		{
-			m_Circle.x = m_Tank.getPos().getX();
-			m_Circle.y = m_Tank.getPos().getY();
+			m_Circle.x = m_Tank.getPos().getX() - m_Tank.getRadius();
+			m_Circle.y = m_Tank.getPos().getY() - m_Tank.getRadius();
 			mc.addChild(m_Circle);
 
 			//m_Turret.x = m_Tank.getPos().getX()+m_StartingPos.getX();
 			//m_Turret.y = m_Tank.getPos().getY()+m_StartingPos.getY();
-			m_Turret.x = m_Tank.getPos().getX() + m_Tank.getRadius();
-			m_Turret.y = m_Tank.getPos().getY() + m_Tank.getRadius();
+
+//			m_Turret.x = m_Tank.getPos().getX() + m_Tank.getRadius();
+//			m_Turret.y = m_Tank.getPos().getY() + m_Tank.getRadius();
+			m_Turret.x = m_Circle.x + m_Tank.getRadius();
+			m_Turret.y = m_Circle.y + m_Tank.getRadius();
 			m_Turret.graphics.clear();
 			var turretDir:Float = m_Tank.getTurretDir();
 			m_Turret.graphics.beginFill(0x990000);

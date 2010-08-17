@@ -19,7 +19,7 @@ class MtPhysicsSphere extends MtSphere, implements MtPhysicsBody
 
 		//Setup haxe
 		m_HaxeBody = new phx.Body(x,y);
-		m_HaxeShape = new phx.Circle(radius,new phx.Vector(0,0));
+		m_HaxeShape = new phx.Circle(radius, new phx.Vector(0,0));
 		m_HaxeBody.addShape( m_HaxeShape );
 	}
 
@@ -74,11 +74,12 @@ class MtPhysicsSphere extends MtSphere, implements MtPhysicsBody
 	{
 		return new JfVector2(m_HaxeBody.x, m_HaxeBody.y);
 	}
-
+/*
 	public override function getCentrePos()
 	{
 		return new JfVector2(m_HaxeBody.x, m_HaxeBody.y);
 	}
+*/
 
 	public function collidesWithRectangle(rectangle:MtRectangle):Bool
 	{

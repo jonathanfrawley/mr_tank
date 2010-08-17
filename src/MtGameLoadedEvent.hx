@@ -1,6 +1,5 @@
 
 import MtEvent;
-import MtEventData;
 import MtEventType;
 import MtStage;
 

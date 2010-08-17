@@ -30,21 +30,32 @@ class MtPhysicsHandler implements MtEventListener
 	
 	public function new()
 	{
-		m_Bodies = new List();
+		m_Bodies = new List<MtPhysicsBody>();
+		m_EnemyTanks = new List<MtTank>();
 
 		//Setup haxe world
 		var size = new phx.col.AABB(-1000,-1000,1000,1000); 
 		// create the broadphase : this is the algorithm used to optimize collision detection 
 		var bf = new phx.col.SortedList();
 		m_HaxeWorld = new phx.World(size, bf);	
-		// setup gravity
 	}
 
 	public function init():Bool
 	{
+		// setup gravity
 		//m_HaxeWorld.gravity = new phx.Vector(0,0.9);
-        var floor = phx.Shape.makeBox(270,50,0,280);
+		//m_HaxeWorld.gravity = new phx.Vector(0,0.1);
+        var floor = phx.Shape.makeBox(MtStageConstants.SCREEN_WIDTH,MtStageConstants.BORDER_WIDTH,0,MtStageConstants.SCREEN_HEIGHT-MtStageConstants.BORDER_WIDTH);
 		m_HaxeWorld.addStaticShape(floor);
+		
+		var wallLeft = phx.Shape.makeBox(MtStageConstants.BORDER_WIDTH,MtStageConstants.SCREEN_HEIGHT,0,0);
+		m_HaxeWorld.addStaticShape(wallLeft);
+
+        var ceiling = phx.Shape.makeBox(MtStageConstants.SCREEN_WIDTH,MtStageConstants.BORDER_WIDTH,0,0);
+		m_HaxeWorld.addStaticShape(ceiling);
+
+        var wallRight = phx.Shape.makeBox(MtStageConstants.BORDER_WIDTH,MtStageConstants.SCREEN_HEIGHT,MtStageConstants.SCREEN_WIDTH-MtStageConstants.BORDER_WIDTH,0);
+		m_HaxeWorld.addStaticShape(wallRight);
 
 		return true;
 	}
@@ -70,7 +81,22 @@ class MtPhysicsHandler implements MtEventListener
 		}
 		//Collision Detection
  */
+		for(tank in m_EnemyTanks)
+		{
+			//TODO: Better way of doing this?
+			m_HaxeWorld.activate(tank.getBody());
+		}
 		m_HaxeWorld.step(1,20);
+
+/*
+                var g = flash.Lib.current.graphics;
+                g.clear();
+
+                var fd = new phx.FlashDraw(g); 
+                fd.drawCircleRotation = true; 
+                fd.drawWorld(m_HaxeWorld);
+*/
+
 
 	}
 
@@ -88,17 +114,14 @@ class MtPhysicsHandler implements MtEventListener
 			m_Bodies.add(m_PlayerTank);
 
 			m_HaxeWorld.addBody(m_PlayerTank.getBody());
-
-			//XXX:Remove DEBUG
-			m_PlayerTank.getBody().setSpeed(10,10);
 		}
 		else if(event.getType()==MT_EVENT_UPPRESSED)
 		{
-			m_PlayerTank.getBody().setSpeed(10,10);
 			var upPressedEvent : MtUpPressedEvent = cast event;
 			if(upPressedEvent.getPlayer() == MT_PLAYER_0)
 			{
 				m_PlayerTank.upPressed();
+				m_HaxeWorld.activate(m_PlayerTank.getBody());
 			}			
 		}
 		else if(event.getType()==MT_EVENT_UPDEPRESSED)
@@ -107,6 +130,7 @@ class MtPhysicsHandler implements MtEventListener
 			if(upDepressedEvent.getPlayer() == MT_PLAYER_0)
 			{
 				m_PlayerTank.upDepressed();
+				m_HaxeWorld.activate(m_PlayerTank.getBody());
 			}			
 		}
 		else if(event.getType()==MT_EVENT_DOWNPRESSED)
@@ -115,6 +139,7 @@ class MtPhysicsHandler implements MtEventListener
 			if(downPressedEvent.getPlayer() == MT_PLAYER_0)
 			{
 				m_PlayerTank.downPressed();
+				m_HaxeWorld.activate(m_PlayerTank.getBody());
 			}			
 		}
 		else if(event.getType()==MT_EVENT_DOWNDEPRESSED)
@@ -123,6 +148,7 @@ class MtPhysicsHandler implements MtEventListener
 			if(downDepressedEvent.getPlayer() == MT_PLAYER_0)
 			{
 				m_PlayerTank.downDepressed();
+				m_HaxeWorld.activate(m_PlayerTank.getBody());
 			}			
 		}
 		else if(event.getType()==MT_EVENT_LEFTPRESSED)
@@ -131,6 +157,7 @@ class MtPhysicsHandler implements MtEventListener
 			if(leftPressedEvent.getPlayer() == MT_PLAYER_0)
 			{
 				m_PlayerTank.leftPressed();
+				m_HaxeWorld.activate(m_PlayerTank.getBody());
 			}			
 		}
 		else if(event.getType()==MT_EVENT_LEFTDEPRESSED)
@@ -139,6 +166,7 @@ class MtPhysicsHandler implements MtEventListener
 			if(leftDepressedEvent.getPlayer() == MT_PLAYER_0)
 			{
 				m_PlayerTank.leftDepressed();
+				m_HaxeWorld.activate(m_PlayerTank.getBody());
 			}			
 		}
 		else if(event.getType()==MT_EVENT_RIGHTPRESSED)
@@ -147,6 +175,7 @@ class MtPhysicsHandler implements MtEventListener
 			if(rightPressedEvent.getPlayer() == MT_PLAYER_0)
 			{
 				m_PlayerTank.rightPressed();
+				m_HaxeWorld.activate(m_PlayerTank.getBody());
 			}			
 		}
 		else if(event.getType()==MT_EVENT_RIGHTDEPRESSED)
@@ -155,6 +184,7 @@ class MtPhysicsHandler implements MtEventListener
 			if(rightDepressedEvent.getPlayer() == MT_PLAYER_0)
 			{
 				m_PlayerTank.rightDepressed();
+				m_HaxeWorld.activate(m_PlayerTank.getBody());
 			}			
 		}
 		else if(event.getType()==MT_EVENT_GAMELOADED)
@@ -201,12 +231,17 @@ class MtPhysicsHandler implements MtEventListener
 		}
 		else if(event.getType()==MT_EVENT_ENEMYTANKCREATED)
 		{
+			trace("Hi");
 			var event : MtEnemyTankCreatedEvent = cast event;
-			m_EnemyTanks.add(event.getTank());	
-			m_Bodies.add(event.getTank());	
+			var tank : MtTank = event.getTank();
+			m_EnemyTanks.add(tank);	
+			m_Bodies.add(tank);	
 
-			m_HaxeWorld.addBody(event.getTank().getBody());
+			m_HaxeWorld.addBody(tank.getBody());
+
+			m_HaxeWorld.activate(tank.getBody());
 		}
+		//m_PlayerTank.getBody().setSpeed(10,10);
 		return true;
 	}
 
