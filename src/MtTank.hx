@@ -21,6 +21,11 @@ class MtTank extends MtPhysicsSphere
 		m_TurretDir = 0.0;
 //		m_Speed = 3;
 	}
+
+	public function equals(other:MtTank)
+	{
+		return m_ActorID == other.getActorID();
+	}
 /*
 	public function step(timeStep:JfReal)
 	{

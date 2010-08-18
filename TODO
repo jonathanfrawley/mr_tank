@@ -4,13 +4,13 @@ G3n3515 tank
 Done List
 #########
 - DONE - Make JfVector2 use Float.
-- DONE Finish Adding in Haxe, modify getCentrePos(), Move haxe stuff from PhysicsSphere to higher up in hierarchy. Fix stuff!
+- DONE - Finish Adding in Haxe, modify getCentrePos(), Move haxe stuff from PhysicsSphere to higher up in hierarchy. Fix stuff!
+- DONE - Add in health bar (necessary!). Should be beside tank or on bottom of screen? Hmm.
 
 TODO List
 #########
 - Go over event code make sure it can't be made easier to add events.
 - Add in AI logic with Haxe including weapons ( laser, bullet, cannon )
-- Add in health bar (necessary!). Should be beside tank or on bottom of screen? Hmm.
 - Death and respawn animations.
 - Add in levels.
 - Sounds!

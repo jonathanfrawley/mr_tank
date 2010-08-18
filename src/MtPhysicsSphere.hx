@@ -28,6 +28,11 @@ class MtPhysicsSphere extends MtSphere, implements MtPhysicsBody
 		return m_HaxeBody;
 	}
 
+	public function getShape()
+	{
+		return m_HaxeShape;
+	}
+
 	public function step(timeStep:Float):Void
 	{
 		var dirVec = new JfVector2((Math.cos(m_Dir)), (Math.sin(m_Dir)));

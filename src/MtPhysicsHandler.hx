@@ -24,6 +24,7 @@ class MtPhysicsHandler implements MtEventListener
 {
 	private var m_Bodies:List<MtPhysicsBody>;
 	private var m_EnemyTanks:List<MtTank>;
+	private var m_Bullets:List<MtBullet>;
 	private var m_PlayerTank:MtTank;
 	private var m_Stage:MtStage;
 	private var m_HaxeWorld:phx.World;
@@ -32,6 +33,7 @@ class MtPhysicsHandler implements MtEventListener
 	{
 		m_Bodies = new List<MtPhysicsBody>();
 		m_EnemyTanks = new List<MtTank>();
+		m_Bullets = new List<MtBullet>();
 
 		//Setup haxe world
 		var size = new phx.col.AABB(-1000,-1000,1000,1000); 
@@ -86,7 +88,40 @@ class MtPhysicsHandler implements MtEventListener
 			//TODO: Better way of doing this?
 			m_HaxeWorld.activate(tank.getBody());
 		}
+
+		for (bullet in m_Bullets)
+		{
+			//TODO:Does this work?
+			//m_HaxeWorld.activate(bullet.getBody());
+			//m_HaxeWorld.sync(bullet.getBody());
+			
+
+			var collision = new phx.Collision();
+			var arb = new phx.Arbiter(new phx.Allocator());
+			if(collision.testShapes(m_PlayerTank.getShape(), bullet.getShape(), arb))
+			{
+				MtEventManager.getInstance().queueEvent(new MtTankBulletCollisionEvent(m_PlayerTank, cast bullet));
+			}
+			for(tank in m_EnemyTanks)
+			{
+				if(collision.testShapes(tank.getShape(), bullet.getShape(), arb))
+				{
+					MtEventManager.getInstance().queueEvent(new MtTankBulletCollisionEvent(tank, cast bullet));
+				}
+			}
+
+/*
+			if(MtCollisionDetector.getInstance().bodyWithinSphere(bullet, m_PlayerTank))
+			{
+				MtEventManager.getInstance().queueEvent(new MtTankBulletCollisionEvent(m_PlayerTank, cast bullet));
+			}
+*/
+			
+		}
+
+
 		m_HaxeWorld.step(1,20);
+
 
 /*
                 var g = flash.Lib.current.graphics;
@@ -214,6 +249,7 @@ class MtPhysicsHandler implements MtEventListener
 			//var bullet = new MtBullet(m_PlayerTank.getPos().getX(), m_PlayerTank.getPos().getY(), m_PlayerTank.getTurretDir(), m_PlayerTank.getRadius(), radius);
 			var bullet = new MtBullet(startPos.getX(), startPos.getY(), m_PlayerTank.getTurretDir(), m_PlayerTank.getRadius(), radius);
 			m_Bodies.add(bullet);
+			m_Bullets.add(bullet);
 			m_HaxeWorld.addBody(bullet.getBody());
 			MtEventManager.getInstance().trigger(new MtBulletCreatedEvent(bullet));
 		}

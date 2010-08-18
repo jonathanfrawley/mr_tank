@@ -16,10 +16,11 @@ class MtGraphicsHandler implements MtEventListener
 	private var m_BackgroundGraphics : MtBackgroundGraphics;
 	private var m_StageGraphics : MtStageGraphics;
 	private var m_MovieClip : flash.display.MovieClip;
-	private var m_Tank:MtTank;
-	private var m_TankGraphics:MtTankGraphics;
+	private var m_PlayerTank:MtTank;
+	private var m_PlayerTankGraphics:MtTankGraphics;
 	private var m_BulletGraphics:List<MtBulletGraphics>;
 	private var m_EnemyTanksGraphics:List<MtTankGraphics>;
+	private var m_HealthBarsGraphics:List<MtHealthBarGraphics>;
 	private var m_IsEndScreen:Bool;
  
 	public function new()
@@ -28,9 +29,10 @@ class MtGraphicsHandler implements MtEventListener
 		m_StageGraphics = new MtStageGraphics();
         m_MovieClip = flash.Lib.current;
 		//m_StageRef=null;
-		m_TankGraphics = new MtTankGraphics();
+		m_PlayerTankGraphics = new MtTankGraphics();
 		m_BulletGraphics = new List<MtBulletGraphics>();
 		m_EnemyTanksGraphics = new List<MtTankGraphics>();
+		m_HealthBarsGraphics = new List<MtHealthBarGraphics>();
 		m_IsEndScreen = false;
 	}
 
@@ -52,7 +54,10 @@ class MtGraphicsHandler implements MtEventListener
 		{
 			m_BackgroundGraphics.draw(m_MovieClip);
 			m_StageGraphics.draw(m_MovieClip);
-			m_TankGraphics.draw(m_MovieClip);
+			if(m_PlayerTankGraphics != null)
+			{
+				m_PlayerTankGraphics.draw(m_MovieClip);
+			}
 			for(bulletGraphics in m_BulletGraphics)
 			{
 				bulletGraphics.draw(m_MovieClip);
@@ -60,6 +65,10 @@ class MtGraphicsHandler implements MtEventListener
 			for(enemyTankGraphics in m_EnemyTanksGraphics)
 			{
 				enemyTankGraphics.draw(m_MovieClip);
+			}
+			for(healthBarGraphics in m_HealthBarsGraphics)
+			{
+				healthBarGraphics.draw(m_MovieClip);
 			}
 		}
 		else
@@ -84,8 +93,8 @@ class MtGraphicsHandler implements MtEventListener
 		else if(event.getType()==MT_EVENT_TANKCREATED)
 		{
 			var tankCreatedEvent : MtTankCreatedEvent = cast event;
-			m_Tank = tankCreatedEvent.getTank();	
-			m_TankGraphics.init(tankCreatedEvent.getTank());
+			m_PlayerTank = tankCreatedEvent.getTank();	
+			m_PlayerTankGraphics.init(tankCreatedEvent.getTank());
 		}
 		else if(event.getType()==MT_EVENT_ENEMYTANKCREATED)
 		{
@@ -99,7 +108,7 @@ class MtGraphicsHandler implements MtEventListener
 			var bulletCreatedEvent : MtBulletCreatedEvent = cast event;
 			var bullet = bulletCreatedEvent.getBullet();
 			var bulletGraphics = new MtBulletGraphics();
-			bulletGraphics.init(bullet, m_Tank);
+			bulletGraphics.init(bullet, m_PlayerTank);
 			m_BulletGraphics.add(bulletGraphics);
 		}
 		else if(event.getType() == MT_EVENT_TANK_BULLET_COLLISION)
@@ -108,7 +117,31 @@ class MtGraphicsHandler implements MtEventListener
 			var bullet : MtBullet = event.getBullet();
 			var tank :MtTank = event.getTank();
 			//TODO : Delete Tank and bullet
-			setEndScreen();
+			//setEndScreen();
+			if(tank.equals(m_PlayerTank))
+			{
+				m_PlayerTankGraphics = null;
+			}
+			else
+			{
+				for(enemyTankGraphics in m_EnemyTanksGraphics)
+				{
+					if(enemyTankGraphics.getTank().equals(tank))
+					{
+						m_EnemyTanksGraphics.remove(enemyTankGraphics);
+					}
+				}
+			}
+		}
+		else if(event.getType() == MT_EVENT_HEALTH_BAR_CREATED)
+		{
+			var event : MtHealthBarCreatedEvent = cast event;
+			if(event.getHealthBar().getTank().equals(m_PlayerTank))
+			{
+				var graphics = new MtHealthBarGraphics(event.getHealthBar());
+				graphics.init();
+				m_HealthBarsGraphics.add(graphics);
+			}
 		}
 		return true;
 	}
