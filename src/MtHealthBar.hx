@@ -10,8 +10,16 @@ class MtHealthBar
 	public function new(tank:MtTank)
 	{
 		m_MaximumHealth = 100;
-		m_Health = 10;
+		m_Health = 100;
 		m_Tank = tank;
+	}
+
+	public function registerHit()
+	{
+		if(m_Health > 0)
+		{
+			m_Health -= 10.0;
+		}
 	}
 	
 	public function getFullness()

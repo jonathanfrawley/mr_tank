@@ -118,6 +118,7 @@ class MtGraphicsHandler implements MtEventListener
 			var tank :MtTank = event.getTank();
 			//TODO : Delete Tank and bullet
 			//setEndScreen();
+/*
 			if(tank.equals(m_PlayerTank))
 			{
 				m_PlayerTankGraphics = null;
@@ -132,6 +133,7 @@ class MtGraphicsHandler implements MtEventListener
 					}
 				}
 			}
+*/
 		}
 		else if(event.getType() == MT_EVENT_HEALTH_BAR_CREATED)
 		{
