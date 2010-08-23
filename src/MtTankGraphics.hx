@@ -18,6 +18,11 @@ class MtTankGraphics extends MtInitialisable
 		m_IsInit = false;
 	}
 
+	public function getTank()
+	{
+		return m_Tank;
+	}
+
 	public function init(tank:MtTank)
 	{
         m_Circle.graphics.beginFill ( 0x990000 );

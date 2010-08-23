@@ -122,4 +122,12 @@ class MtTank extends MtPhysicsSphere
 			m_Speed = 0;
 		}
 	}
+
+	public function move(dir:Float)
+	{
+		m_TurretDir = Math.PI;
+		m_Dir = dir;
+		m_Speed = MT_THROTTLE_SPEED;
+	}
+
 }

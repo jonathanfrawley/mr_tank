@@ -65,6 +65,7 @@ class MtGameLogic extends MtBaseGame, implements MtEventListener
 		MtEventManager.getInstance().addListener(m_GraphicsHandler);
 		MtEventManager.getInstance().addListener(m_IOHandler);
 		MtEventManager.getInstance().addListener(m_PhysicsHandler);
+		MtEventManager.getInstance().addListener(m_AIHandler);
 		MtEventManager.getInstance().addListener(this);
 	}
 
@@ -76,7 +77,7 @@ class MtGameLogic extends MtBaseGame, implements MtEventListener
 			MtEventManager.getInstance().queueEvent(new MtTankCreatedEvent(new MtTank(40,40)));
 			MtEventManager.getInstance().queueEvent(new MtGameLoadedEvent(new MtStage( MtStageConstants.SCREEN_WIDTH-20, MtStageConstants.SCREEN_HEIGHT-20)));
 
-			MtEventManager.getInstance().queueEvent(new MtEnemyTankCreatedEvent(new MtTank(80,80)));
+			MtEventManager.getInstance().queueEvent(new MtEnemyTankCreatedEvent(new MtTank(160,160)));
 		}
 	}
 

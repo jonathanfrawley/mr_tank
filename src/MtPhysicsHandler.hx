@@ -24,12 +24,15 @@ class MtPhysicsHandler implements MtEventListener
 {
 	private var m_Bodies:List<MtPhysicsBody>;
 	private var m_EnemyTanks:List<MtTank>;
+	private var m_Bullets:List<MtBullet>;
 	private var m_PlayerTank:MtTank;
 	private var m_Stage:MtStage;
 	
 	public function new()
 	{
-		m_Bodies = new List();
+		m_Bodies = new List<MtPhysicsBody>();
+		m_Bullets = new List<MtBullet>();
+		m_EnemyTanks = new List<MtTank>();
 	}
 
 	public function init():Bool
@@ -45,7 +48,8 @@ class MtPhysicsHandler implements MtEventListener
 			if(MtCollisionDetector.getInstance().bodyWithinRectangle(body, m_Stage))
 			{
 				body.wallCollisionResponse();	
-			}	
+			}
+/*
 			if(body.getActorID() != m_PlayerTank.getActorID())
 			{
 				if(MtCollisionDetector.getInstance().bodyWithinSphere(body, m_PlayerTank))
@@ -54,8 +58,32 @@ class MtPhysicsHandler implements MtEventListener
 					MtEventManager.getInstance().queueEvent(new MtTankBulletCollisionEvent(m_PlayerTank, cast body));
 				}
 			}
+*/
 		}
 		//Collision Detection
+		for(bullet in m_Bullets)
+		{
+			if(MtCollisionDetector.getInstance().bodyWithinSphere(bullet, m_PlayerTank))
+			{
+				MtEventManager.getInstance().queueEvent(new MtTankBulletCollisionEvent(m_PlayerTank, cast bullet));
+			}
+			for(enemyTank in m_EnemyTanks)
+			{
+				if(MtCollisionDetector.getInstance().bodyWithinSphere(bullet, enemyTank))
+				{
+					MtEventManager.getInstance().queueEvent(new MtTankBulletCollisionEvent(enemyTank, cast bullet));
+				}
+			}
+		}
+
+		//Between enemy tanks and other tanks
+		for(enemyTank in m_EnemyTanks)
+		{
+			if(MtCollisionDetector.getInstance().bodyWithinSphere(m_PlayerTank, enemyTank))
+			{
+				MtEventManager.getInstance().trigger(new MtTankTankCollisionEvent(m_PlayerTank, enemyTank));
+			}
+		}
 
 /*
 		if(! MtCollisionDetector.getInstance().circleWithinRectangle(m_PlayerTank,m_Stage))
@@ -175,6 +203,7 @@ class MtPhysicsHandler implements MtEventListener
 			//var bullet = new MtBullet(m_PlayerTank.getPos().getX(), m_PlayerTank.getPos().getY(), m_PlayerTank.getTurretDir(), m_PlayerTank.getRadius(), radius);
 			var bullet = new MtBullet(startPos.getX(), startPos.getY(), m_PlayerTank.getTurretDir(), m_PlayerTank.getRadius(), radius);
 			m_Bodies.add(bullet);
+			m_Bullets.add(bullet);
 			MtEventManager.getInstance().trigger(new MtBulletCreatedEvent(bullet));
 		}
 		else if(event.getType()==MT_EVENT_MOUSEMOVED)
@@ -192,8 +221,17 @@ class MtPhysicsHandler implements MtEventListener
 		else if(event.getType()==MT_EVENT_ENEMYTANKCREATED)
 		{
 			var event : MtEnemyTankCreatedEvent = cast event;
-			m_EnemyTanks.add(event.getTank());	
-			m_Bodies.add(event.getTank());	
+			var tank = event.getTank();
+			m_EnemyTanks.add(tank);	
+			m_Bodies.add(tank);	
+		}
+		else if(event.getType()==MT_EVENT_TANKMOVED)
+		{
+			var event : MtTankMovedEvent = cast event;
+			var tank = event.getTank();	
+			var dir = event.getDir();
+			tank.move(dir);
+//			tank.move(0);
 		}
 		return true;
 	}

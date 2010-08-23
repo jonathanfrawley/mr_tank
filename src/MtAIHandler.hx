@@ -7,7 +7,7 @@ class MtAIHandler implements MtEventListener
 
 	public function new()
 	{
-		m_EnemyTanks = new List();
+		m_EnemyTanks = new List<MtTank>();
 	}
 
 	public function init():Bool
@@ -17,6 +17,13 @@ class MtAIHandler implements MtEventListener
 
 	public function step()
 	{
+		for(enemyTank in m_EnemyTanks)
+		{
+			//var dir = enemyTank.getCentrePos().subtract(m_PlayerTank.getCentrePos());
+			var dir = m_PlayerTank.getCentrePos().subtract(enemyTank.getCentrePos());
+			var dirAngle = Math.atan2(dir.getY(),dir.getX());
+			MtEventManager.getInstance().trigger(new MtTankMovedEvent(enemyTank, dirAngle));
+		}
 	}
 
 	public function getName():String
