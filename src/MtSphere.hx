@@ -23,6 +23,8 @@ class MtSphere extends MtShape
      */
 	public function getCentrePos():JfVector2
 	{
-		return m_Pos.add(new JfVector2(m_Radius,m_Radius));
+//		return m_Pos.add(new JfVector2(m_Radius,m_Radius));
+//		return getPos().add(new JfVector2(m_Radius,m_Radius));
+		return getPos();
 	}
 }

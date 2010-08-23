@@ -14,12 +14,17 @@ class MtTank extends MtPhysicsSphere
 
 	public function new(x:JfReal,y:JfReal)
 	{
-		super(x,y,0,0,20);
+		super(x,y,0,2,20);
 		//m_Pos = new JfVector2(x,y);
 		//m_Radius = 20;
 		//m_TurretDir = new JfVector2(1,0);
 		m_TurretDir = 0.0;
 //		m_Speed = 3;
+	}
+
+	public function equals(other:MtTank)
+	{
+		return m_ActorID == other.getActorID();
 	}
 /*
 	public function step(timeStep:JfReal)
@@ -60,67 +65,88 @@ class MtTank extends MtPhysicsSphere
 
 	public function upPressed()
 	{
-		//m_Dir.setY(-m_Speed);
-		m_Dir = - Math.PI / 2;
-		m_Speed = MT_THROTTLE_SPEED;
+//		m_Dir = - Math.PI / 2;
+//		m_Speed = MT_THROTTLE_SPEED;
+
+//		trace("Hello UP PRESSED"); 
+//		trace(m_HaxeBody);
+		m_HaxeBody.setSpeed(0 , -MT_THROTTLE_SPEED);
+//		m_HaxeBody.f = new phx.Vector(10 , MT_THROTTLE_SPEED*100);
 	}
 
 	public function upDepressed()
 	{
 		//m_Dir.setY(0);
+/*
 		if(m_Dir== -Math.PI / 2)
 		{
 			m_Speed = 0;
 		}
+*/
+
+		m_HaxeBody.setSpeed(0 , 0);
 	}
 
 	public function downPressed()
 	{
 //		m_Dir.setY(m_Speed);
-		m_Dir = Math.PI / 2;
-		m_Speed = MT_THROTTLE_SPEED;
+//		m_Dir = Math.PI / 2;
+//		m_Speed = MT_THROTTLE_SPEED;
+
+		m_HaxeBody.setSpeed(0 , MT_THROTTLE_SPEED);
 	}
 
 	public function downDepressed()
 	{
 	//	m_Dir.setY(0);
-		if(m_Dir== Math.PI / 2)
-		{
-			m_Speed = 0;
-		}
+//		if(m_Dir== Math.PI / 2)
+//		{
+//			m_Speed = 0;
+//		}
+
+		m_HaxeBody.setSpeed(0 , 0);
 	}
 
 	public function leftPressed()
 	{
 		//m_Dir.setX(-m_Speed);
-		m_Dir = Math.PI;
-		m_Speed = MT_THROTTLE_SPEED;
+//		m_Dir = Math.PI;
+//		m_Speed = MT_THROTTLE_SPEED;
+
+		m_HaxeBody.setSpeed(-MT_THROTTLE_SPEED , 0);
 	}
 
 	public function leftDepressed()
 	{
 //		m_Dir.setX(0);
-
+/*
 		if(m_Dir==Math.PI)
 		{
 			m_Speed = 0;
 		}
+*/
+
+		m_HaxeBody.setSpeed(0 , 0);
 	}
 
 	public function rightPressed()
 	{
 //		m_Dir.setX(m_Speed);
-		m_Dir = 0;
-		m_Speed = MT_THROTTLE_SPEED;
+//		m_Dir = 0;
+//		m_Speed = MT_THROTTLE_SPEED;
+
+		m_HaxeBody.setSpeed(MT_THROTTLE_SPEED , 0);
 	}
 
 	public function rightDepressed()
 	{
 //		m_Dir.setX(0);
-		if( m_Dir == 0 )
-		{
-			m_Speed = 0;
-		}
+//		if( m_Dir == 0 )
+//		{
+//			m_Speed = 0;
+//		}
+
+		m_HaxeBody.setSpeed(0 , 0);
 	}
 
 	public function move(dir:Float)

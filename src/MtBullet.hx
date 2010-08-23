@@ -16,6 +16,10 @@ class MtBullet extends MtPhysicsSphere
 		super(x,y,dir,2,radius);
 		m_TankRadius = radiusTank;
 
+		m_HaxeBody.setSpeed(Math.cos(dir) * 10, Math.sin(dir) * 10);
+//		m_HaxeShape.material = new phx.Material(0.1,10.9,20);
+		m_HaxeShape.material = new phx.Material(0.9,10.9,20);
+
 //		super(160.0,160.0,5);
 //		m_Dir = new JfVector2(xVel,yVel);
 //		m_Dir = dir;

@@ -24,6 +24,7 @@ class MtGameLogic extends MtBaseGame, implements MtEventListener
 	private var m_LifeTime : Float; // How long game has been in session;
 	private var m_StartPosition : JfVector2;
 	private var loopCnt:Int;
+	private var m_HealthBars:List<MtHealthBar>;
 /*
 	static public var TEMP:Float = -1;
 
@@ -43,6 +44,7 @@ class MtGameLogic extends MtBaseGame, implements MtEventListener
 		m_PhysicsHandler = new MtPhysicsHandler();
 		m_AIHandler = new MtAIHandler();
 
+		m_HealthBars = new List<MtHealthBar>();
 		loopCnt = 0;
 	}
 
@@ -74,10 +76,15 @@ class MtGameLogic extends MtBaseGame, implements MtEventListener
 		if (levelNum==0)
 		{
 			//Setup initial Level
-			MtEventManager.getInstance().queueEvent(new MtTankCreatedEvent(new MtTank(40,40)));
+			var playerTank = new MtTank(40,40);
+			MtEventManager.getInstance().queueEvent(new MtTankCreatedEvent(playerTank));
 			MtEventManager.getInstance().queueEvent(new MtGameLoadedEvent(new MtStage( MtStageConstants.SCREEN_WIDTH-20, MtStageConstants.SCREEN_HEIGHT-20)));
 
 			MtEventManager.getInstance().queueEvent(new MtEnemyTankCreatedEvent(new MtTank(160,160)));
+
+			var playerHealthBar = new MtHealthBar(playerTank);
+			m_HealthBars.add(playerHealthBar);
+			MtEventManager.getInstance().queueEvent(new MtHealthBarCreatedEvent(playerHealthBar));
 		}
 	}
 
@@ -123,6 +130,18 @@ class MtGameLogic extends MtBaseGame, implements MtEventListener
 		if(event.getType() == MT_EVENT_GAMEEND)
 		{
 			m_IsFinished = ! m_IsFinished;
+		}
+		else if(event.getType() == MT_EVENT_TANK_BULLET_COLLISION)
+		{
+			var event : MtTankBulletCollisionEvent = cast event;
+			var tank = event.getTank();	
+			for(healthBar in m_HealthBars)
+			{
+				if(tank == healthBar.getTank())
+				{
+					healthBar.registerHit();
+				}
+			}
 		}
 		return true;
 	}

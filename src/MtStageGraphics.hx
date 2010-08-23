@@ -1,8 +1,6 @@
 
 import flash.display.Shape;
 
-import MtInitialisable;
-
 class MtStageGraphics extends MtInitialisable
 {
 	var m_Border:Shape;

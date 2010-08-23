@@ -1,13 +1,9 @@
 
-import MtTank;
-import MtBullet;
-import MtInitialisable;
-import JfVector2;
-
 class MtBulletGraphics extends MtInitialisable
 {
     private var m_Circle : flash.display.Shape;
 	private var m_Bullet : MtBullet;
+	private var m_Tank : MtTank;
 
 	public function new()
 	{
@@ -23,6 +19,7 @@ class MtBulletGraphics extends MtInitialisable
         m_Circle.graphics.drawCircle ( tank.getRadius(), tank.getRadius(), bullet.getRadius());
         m_Circle.graphics.endFill();
 		m_Bullet = bullet;
+		m_Tank = tank;
 		m_IsInit = true;
 	}
 
@@ -30,8 +27,8 @@ class MtBulletGraphics extends MtInitialisable
 	{
 		if(m_IsInit)
 		{
-			m_Circle.x = m_Bullet.getPos().getX();
-			m_Circle.y = m_Bullet.getPos().getY();
+			m_Circle.x = m_Bullet.getPos().getX() - m_Tank.getRadius();
+			m_Circle.y = m_Bullet.getPos().getY() - m_Tank.getRadius();
 			mc.addChild(m_Circle);
 		}
 	}

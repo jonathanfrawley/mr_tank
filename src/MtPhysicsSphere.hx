@@ -7,6 +7,8 @@ class MtPhysicsSphere extends MtSphere, implements MtPhysicsBody
 	private var m_Dir : JfReal;
 	private var m_Speed : JfReal;
 	private var m_ActorID : MtActorID;
+	private var m_HaxeBody : phx.Body;
+	private var m_HaxeShape : phx.Shape;
 
 	public function new(x:JfReal, y:JfReal, dir:JfReal, speed:JfReal, radius:JfReal)
 	{
@@ -14,6 +16,21 @@ class MtPhysicsSphere extends MtSphere, implements MtPhysicsBody
 		m_Dir = dir;
 		m_Speed = speed;
 		setActorID(MtActorIDGenerator.getInstance().getNext());
+
+		//Setup haxe
+		m_HaxeBody = new phx.Body(x,y);
+		m_HaxeShape = new phx.Circle(radius, new phx.Vector(0,0));
+		m_HaxeBody.addShape( m_HaxeShape );
+	}
+
+	public function getBody()
+	{
+		return m_HaxeBody;
+	}
+
+	public function getShape()
+	{
+		return m_HaxeShape;
 	}
 
 	public function step(timeStep:Float):Void
@@ -57,6 +74,18 @@ class MtPhysicsSphere extends MtSphere, implements MtPhysicsBody
 		step(1);
 	}
 
+	//XXX:Need to put above in superclass
+	public override function getPos()
+	{
+		return new JfVector2(m_HaxeBody.x, m_HaxeBody.y);
+	}
+/*
+	public override function getCentrePos()
+	{
+		return new JfVector2(m_HaxeBody.x, m_HaxeBody.y);
+	}
+*/
+
 	public function collidesWithRectangle(rectangle:MtRectangle):Bool
 	{
 		var xMin = rectangle.getPos().getX();
@@ -98,8 +127,15 @@ class MtPhysicsSphere extends MtSphere, implements MtPhysicsBody
 
 	public function getDir():JfReal
 	{
+		return m_HaxeBody.a;
+	}
+
+/*
+	public function getDir():JfReal
+	{
 		return m_Dir;
 	}
+*/
 
 	public function setDir(dir:JfReal)
 	{
