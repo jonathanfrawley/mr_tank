@@ -80,11 +80,16 @@ class MtGameLogic extends MtBaseGame, implements MtEventListener
 			MtEventManager.getInstance().queueEvent(new MtTankCreatedEvent(playerTank));
 			MtEventManager.getInstance().queueEvent(new MtGameLoadedEvent(new MtStage( MtStageConstants.SCREEN_WIDTH-20, MtStageConstants.SCREEN_HEIGHT-20)));
 
-			MtEventManager.getInstance().queueEvent(new MtEnemyTankCreatedEvent(new MtTank(160,160)));
+			var enemyTank0 = new MtTank(160,160);
+			MtEventManager.getInstance().queueEvent(new MtEnemyTankCreatedEvent(enemyTank0));
 
 			var playerHealthBar = new MtHealthBar(playerTank);
 			m_HealthBars.add(playerHealthBar);
 			MtEventManager.getInstance().queueEvent(new MtHealthBarCreatedEvent(playerHealthBar));
+
+			var enemy0HealthBar = new MtHealthBar(enemyTank0);
+			m_HealthBars.add(enemy0HealthBar);
+			MtEventManager.getInstance().queueEvent(new MtHealthBarCreatedEvent(enemy0HealthBar));
 		}
 	}
 
@@ -140,10 +145,14 @@ class MtGameLogic extends MtBaseGame, implements MtEventListener
 				if(tank == healthBar.getTank())
 				{
 					healthBar.registerHit();
+					if(healthBar.getFullness() == 0)
+					{
+						MtEventManager.getInstance().queueEvent(new MtTankDestroyedEvent(healthBar.getTank()));
+						
+					}
 				}
 			}
 		}
 		return true;
 	}
-	
 }

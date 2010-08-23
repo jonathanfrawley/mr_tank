@@ -16,6 +16,11 @@ class MtHealthBarGraphics extends MtInitialisable
 		m_IsInit = false;
 	}
 
+	public function getHealthBar():MtHealthBar
+	{
+		return m_HealthBar;	
+	}
+
 	public function init()
 	{
         m_OuterBox.graphics.beginFill ( 0x000000 );

@@ -72,6 +72,7 @@ class MtPhysicsHandler implements MtEventListener
 			{
 				body.wallCollisionResponse();	
 			}
+*/
 /*
 			if(body.getActorID() != m_PlayerTank.getActorID())
 			{
@@ -81,8 +82,8 @@ class MtPhysicsHandler implements MtEventListener
 					MtEventManager.getInstance().queueEvent(new MtTankBulletCollisionEvent(m_PlayerTank, cast body));
 				}
 			}
-*/
 		}
+*/
 		for(tank in m_EnemyTanks)
 		{
 			//TODO: Better way of doing this?

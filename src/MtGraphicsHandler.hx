@@ -120,6 +120,7 @@ class MtGraphicsHandler implements MtEventListener
 		}
 		else if(event.getType() == MT_EVENT_TANK_BULLET_COLLISION)
 		{
+			//TODO : Create cool explosion effect
 /*
 			var event : MtTankBulletCollisionEvent = cast event;
 			var bullet : MtBullet = event.getBullet();
@@ -160,15 +161,44 @@ class MtGraphicsHandler implements MtEventListener
 				{
 					m_EnemyTanksGraphics.remove(enemyTankGraphics);
 				}
+			}
 		}
 		else if(event.getType() == MT_EVENT_HEALTH_BAR_CREATED)
 		{
 			var event : MtHealthBarCreatedEvent = cast event;
-			if(event.getHealthBar().getTank().equals(m_PlayerTank))
-			{
+//			if(event.getHealthBar().getTank().equals(m_PlayerTank))
+//			{
 				var graphics = new MtHealthBarGraphics(event.getHealthBar());
 				graphics.init();
 				m_HealthBarsGraphics.add(graphics);
+//			}
+		}
+		else if(event.getType() == MT_EVENT_TANKDESTROYED)
+		{
+			var event : MtTankDestroyedEvent = cast event;
+			var tank :MtTank = event.getTank();
+			//TODO : Delete Tank and bullet
+			//setEndScreen();
+			if(tank.equals(m_PlayerTank))
+			{
+				m_PlayerTankGraphics = null;
+			}
+			else
+			{
+				for(enemyTankGraphics in m_EnemyTanksGraphics)
+				{
+					if(enemyTankGraphics.getTank().equals(tank))
+					{
+						m_EnemyTanksGraphics.remove(enemyTankGraphics);
+					}
+				}
+			}
+			for(healthbargraphics in m_HealthBarsGraphics)
+			{
+				if(healthbargraphics.getHealthBar().getTank() == tank)
+				{
+					m_HealthBarsGraphics.remove(healthbargraphics);
+				}
 			}
 		}
 		return true;
