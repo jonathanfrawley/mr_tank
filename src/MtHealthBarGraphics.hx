@@ -1,6 +1,9 @@
 
 class MtHealthBarGraphics extends MtInitialisable
 {
+	private static var HEALTH_BAR_WIDTH = 30;
+	private static var HEALTH_BAR_HEIGHT = 3;
+
     private var m_InnerBox : flash.display.Shape;
 	private var m_OuterBox : flash.display.Shape;
 //    private static var m_CircleWidth = 50;
@@ -27,13 +30,13 @@ class MtHealthBarGraphics extends MtInitialisable
         m_OuterBox.graphics.lineStyle ( 1, 0x000000, 1, false, flash.display.LineScaleMode.NONE );
         //m_OuterBox.graphics.drawCircle ( tank.getPos().getX(), tank.getPos().getY(), tank.getRadius());
         //m_OuterBox.graphics.drawCircle ( tank.getRadius(), tank.getRadius(), tank.getRadius());
-        m_OuterBox.graphics.drawRect ( 0, 0, 50, 5 );
+        m_OuterBox.graphics.drawRect ( 0, 0, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT );
         m_OuterBox.graphics.endFill();
         m_InnerBox.graphics.beginFill ( 0x7CFC00 );
         m_InnerBox.graphics.lineStyle ( 1, 0x000000, 1, false, flash.display.LineScaleMode.NONE );
         //m_InnerBox.graphics.drawCircle ( tank.getPos().getX(), tank.getPos().getY(), tank.getRadius());
         //m_InnerBox.graphics.drawCircle ( tank.getRadius(), tank.getRadius(), tank.getRadius());
-        m_InnerBox.graphics.drawRect ( 0, 0, 50, 5 );
+        m_InnerBox.graphics.drawRect ( 0, 0, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT );
         m_InnerBox.graphics.endFill();
 //		m_StartingPos = tank.getPos();
 		m_IsInit = true;
@@ -55,7 +58,7 @@ class MtHealthBarGraphics extends MtInitialisable
 			m_InnerBox.graphics.lineStyle ( 1, 0x000000, 1, false, flash.display.LineScaleMode.NONE );
 			//m_InnerBox.graphics.drawCircle ( tank.getPos().getX(), tank.getPos().getY(), tank.getRadius());
 			//m_InnerBox.graphics.drawCircle ( tank.getRadius(), tank.getRadius(), tank.getRadius());
-			m_InnerBox.graphics.drawRect ( 0, 0, 50 * m_HealthBar.getFullness(), 5 );
+			m_InnerBox.graphics.drawRect ( 0, 0, HEALTH_BAR_WIDTH * m_HealthBar.getFullness(), HEALTH_BAR_HEIGHT );
 			m_InnerBox.graphics.endFill();
 			mc.addChild(m_InnerBox);
 

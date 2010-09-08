@@ -201,6 +201,19 @@ class MtGraphicsHandler implements MtEventListener
 				}
 			}
 		}
+		else if(event.getType() == MT_EVENT_BULLETDESTROYED)
+		{
+			var event : MtBulletDestroyedEvent = cast event;
+			var bullet = event.getBullet();
+			for(bulletGraphics in m_BulletGraphics)
+			{
+				if(bullet.equals(bulletGraphics.getBullet()))
+				{
+					m_BulletGraphics.remove(bulletGraphics);
+					return true;
+				}
+			}
+		}
 		return true;
 	}
 }

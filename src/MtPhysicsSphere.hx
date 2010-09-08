@@ -23,6 +23,11 @@ class MtPhysicsSphere extends MtSphere, implements MtPhysicsBody
 		m_HaxeBody.addShape( m_HaxeShape );
 	}
 
+	public function equals(other:MtPhysicsSphere)
+	{
+		return m_ActorID == other.getActorID();
+	}
+
 	public function getBody()
 	{
 		return m_HaxeBody;

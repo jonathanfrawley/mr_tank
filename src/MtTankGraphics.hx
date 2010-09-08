@@ -1,5 +1,6 @@
 
 import JfVector2;
+import MtTankType;
 
 class MtTankGraphics extends MtInitialisable
 {
@@ -24,13 +25,20 @@ class MtTankGraphics extends MtInitialisable
 
 	public function init(tank:MtTank)
 	{
-        m_Circle.graphics.beginFill ( 0x990000 );
-        m_Circle.graphics.lineStyle ( 1, 0x000000, 1, false, flash.display.LineScaleMode.NONE );
+		m_Tank = tank;
+		if(m_Tank.getType() == MT_TANK_TYPE_PLAYER)
+		{
+			m_Circle.graphics.beginFill ( 0xEE0000 );
+		}
+		else
+		{
+			m_Circle.graphics.beginFill ( 0xEEEE00 );
+		}
+		m_Circle.graphics.lineStyle ( 1, 0x000000, 1, false, flash.display.LineScaleMode.NONE );
         //m_Circle.graphics.drawCircle ( tank.getPos().getX(), tank.getPos().getY(), tank.getRadius());
         m_Circle.graphics.drawCircle ( tank.getRadius(), tank.getRadius(), tank.getRadius());
         m_Circle.graphics.endFill();
 //		m_StartingPos = tank.getPos();
-		m_Tank = tank;
 		m_IsInit = true;
 	}
 

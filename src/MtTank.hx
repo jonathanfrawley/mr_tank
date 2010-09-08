@@ -3,6 +3,7 @@ import JfCore;
 import JfVector2;
 import MtPhysicsBody;
 import MtSphere;
+import MtTankType;
 
 class MtTank extends MtPhysicsSphere
 {
@@ -11,21 +12,25 @@ class MtTank extends MtPhysicsSphere
 //	private var m_Speed:JfReal;
 	private var m_TurretDir:JfReal;
 	private static var MT_THROTTLE_SPEED:JfReal = 2;
+	private var m_Type:MtTankType;
 
-	public function new(x:JfReal,y:JfReal)
+	public function new(x:JfReal,y:JfReal, type:MtTankType)
 	{
-		super(x,y,0,2,20);
+		super(x,y,0,2,10);
 		//m_Pos = new JfVector2(x,y);
 		//m_Radius = 20;
 		//m_TurretDir = new JfVector2(1,0);
 		m_TurretDir = 0.0;
+		m_Type = type;
 //		m_Speed = 3;
 	}
 
-	public function equals(other:MtTank)
+	public function getType():MtTankType
 	{
-		return m_ActorID == other.getActorID();
+		return m_Type;	
 	}
+
+
 /*
 	public function step(timeStep:JfReal)
 	{

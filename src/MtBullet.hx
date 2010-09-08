@@ -10,6 +10,7 @@ class MtBullet extends MtPhysicsSphere
 //	private var m_Dir:JfReal;
 //	private var m_Speed:JfReal;
 	private var m_TankRadius:JfReal;
+	private var m_WallHitCount:Int;
 
 	public function new(x:JfReal, y:JfReal, dir:JfReal, radiusTank:JfReal, radius:JfReal)
 	{
@@ -20,6 +21,7 @@ class MtBullet extends MtPhysicsSphere
 //		m_HaxeShape.material = new phx.Material(0.1,10.9,20);
 		m_HaxeShape.material = new phx.Material(0.9,10.9,20);
 
+		m_WallHitCount = 0;
 //		super(160.0,160.0,5);
 //		m_Dir = new JfVector2(xVel,yVel);
 //		m_Dir = dir;
@@ -49,6 +51,16 @@ class MtBullet extends MtPhysicsSphere
 			return true;
 		}
 		return false;
+	}
+
+	public function addWallHit():Void
+	{
+		m_WallHitCount++;
+	}
+
+	public function getWallHitCount():Int
+	{
+		return m_WallHitCount;	
 	}
 
 }

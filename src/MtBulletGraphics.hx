@@ -11,9 +11,14 @@ class MtBulletGraphics extends MtInitialisable
 		m_IsInit = false;
 	}
 
+	public function getBullet()
+	{
+		return m_Bullet;	
+	}
+
 	public function init(bullet:MtBullet, tank:MtTank)
 	{
-        m_Circle.graphics.beginFill ( 0x990000 );
+        m_Circle.graphics.beginFill ( 0x000000 );
         m_Circle.graphics.lineStyle ( 1, 0x000000, 1, false, flash.display.LineScaleMode.NONE );
 //        m_Circle.graphics.drawCircle ( bullet.getPos().getX(), bullet.getPos().getY(), bullet.getRadius());
         m_Circle.graphics.drawCircle ( tank.getRadius(), tank.getRadius(), bullet.getRadius());

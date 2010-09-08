@@ -28,12 +28,14 @@ class MtPhysicsHandler implements MtEventListener
 	private var m_PlayerTank:MtTank;
 	private var m_Stage:MtStage;
 	private var m_HaxeWorld:phx.World;
+	private var m_WallShapes:List<phx.Shape>;
 	
 	public function new()
 	{
 		m_Bodies = new List<MtPhysicsBody>();
 		m_EnemyTanks = new List<MtTank>();
 		m_Bullets = new List<MtBullet>();
+		m_WallShapes = new List<phx.Shape>();
 
 		//Setup haxe world
 		var size = new phx.col.AABB(-1000,-1000,1000,1000); 
@@ -49,15 +51,19 @@ class MtPhysicsHandler implements MtEventListener
 		//m_HaxeWorld.gravity = new phx.Vector(0,0.1);
         var floor = phx.Shape.makeBox(MtStageConstants.SCREEN_WIDTH,MtStageConstants.BORDER_WIDTH,0,MtStageConstants.SCREEN_HEIGHT-MtStageConstants.BORDER_WIDTH);
 		m_HaxeWorld.addStaticShape(floor);
+		m_WallShapes.add(floor);
 		
 		var wallLeft = phx.Shape.makeBox(MtStageConstants.BORDER_WIDTH,MtStageConstants.SCREEN_HEIGHT,0,0);
 		m_HaxeWorld.addStaticShape(wallLeft);
+		m_WallShapes.add(wallLeft);
 
         var ceiling = phx.Shape.makeBox(MtStageConstants.SCREEN_WIDTH,MtStageConstants.BORDER_WIDTH,0,0);
 		m_HaxeWorld.addStaticShape(ceiling);
+		m_WallShapes.add(ceiling);
 
         var wallRight = phx.Shape.makeBox(MtStageConstants.BORDER_WIDTH,MtStageConstants.SCREEN_HEIGHT,MtStageConstants.SCREEN_WIDTH-MtStageConstants.BORDER_WIDTH,0);
 		m_HaxeWorld.addStaticShape(wallRight);
+		m_WallShapes.add(wallRight);
 
 		return true;
 	}
@@ -108,6 +114,18 @@ class MtPhysicsHandler implements MtEventListener
 				if(collision.testShapes(tank.getShape(), bullet.getShape(), arb))
 				{
 					MtEventManager.getInstance().queueEvent(new MtTankBulletCollisionEvent(tank, cast bullet));
+					MtEventManager.getInstance().trigger(new MtBulletDestroyedEvent(bullet));	
+				}
+			}
+
+			//Check for collision between walls.
+			for(wall in m_WallShapes)
+			{
+				var collision = new phx.Collision();
+				var arb = new phx.Arbiter(new phx.Allocator());
+				if(collision.testShapes(bullet.getShape(), wall, arb))
+				{
+					MtEventManager.getInstance().trigger(new MtBulletWallCollisionEvent(cast bullet));
 				}
 			}
 
@@ -242,7 +260,7 @@ class MtPhysicsHandler implements MtEventListener
 			var dir : JfVector2 = event.getPos().subtract(m_PlayerTank.getCentrePos());
 			dir.normalize();
 			var dirAngle : Float = Math.atan2(dir.getY(),dir.getX());
-			var radius : Float = 3; //XXX:Magic number
+			var radius : Float = 2; //XXX:Magic number
 			
 			var startPos:JfVector2 = new JfVector2(m_PlayerTank.getPos().getX() + ((m_PlayerTank.getRadius()+radius) * Math.cos(dirAngle))
 													, m_PlayerTank.getPos().getY() + ((m_PlayerTank.getRadius()+radius) * Math.sin(dirAngle)));
@@ -277,6 +295,23 @@ class MtPhysicsHandler implements MtEventListener
 			m_HaxeWorld.addBody(tank.getBody());
 
 			m_HaxeWorld.activate(tank.getBody());
+		}
+		else if(event.getType() == MT_EVENT_BULLETDESTROYED)
+		{
+			var event : MtBulletDestroyedEvent = cast event;
+			var eventBullet = event.getBullet();
+			m_HaxeWorld.removeBody(eventBullet.getBody());
+			m_Bullets.remove(eventBullet);
+		}
+		else if(event.getType() == MT_EVENT_TANKDESTROYED)
+		{
+			var event : MtTankDestroyedEvent = cast event;
+			var eventTank :MtTank = event.getTank();
+			//TODO : Delete Tank and bullet
+			//setEndScreen();
+			m_HaxeWorld.removeBody(eventTank.getBody());
+			m_EnemyTanks.remove(eventTank);
+			
 		}
 		//m_PlayerTank.getBody().setSpeed(10,10);
 		return true;
