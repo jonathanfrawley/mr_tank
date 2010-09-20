@@ -44,7 +44,8 @@ def recursiveTraversal(currentDir,  oldcopyright, copyright, endingPattern):
 def main():
 	global copyrightFilename
 	global endingPattern
-	oldCopyrightFile = None 
+#	oldCopyrightFile = None 
+	oldCopyrightFile = file("LICENSE.old", "r+").read()
 	copyrightFile = file(copyrightFilename, "r+").read()
 	recursiveTraversal("src", oldCopyrightFile, copyrightFile, endingPattern)
 	exit()

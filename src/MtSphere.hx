@@ -1,5 +1,5 @@
 /**
-jfpx - A cross platform physics engine using CUDA    
+mr_tank - A tank game written with haXe    
 Copyright (C) 2010 Jonathan Frawley
 
 This program is free software: you can redistribute it and/or modify
