@@ -107,56 +107,60 @@ class MtPhysicsHandler implements MtEventListener
 			}
 		}
 */
-		for(tank in m_EnemyTanks)
-		{
-			//TODO: Better way of doing this?
-			m_HaxeWorld.activate(tank.getBody());
-		}
 
-		for (bullet in m_Bullets)
+		var numIterations = 10;
+		var actualTimeStep = timeStep / numIterations;
+		/**
+		 * Interesting stuff going on here.
+		 * Firstly we check for collisions, then advance, then iterate. 
+		 * Doing multiple iterations of the physics loop will help to find bugs.
+		 * XXX:This will cause major problems when it comes to animating the explosions. Make sure only one collision event gets called per collision pair during one loop somehow!
+		 */
+		for(i in 0...numIterations)
 		{
-			//TODO:Does this work?
-			//m_HaxeWorld.activate(bullet.getBody());
-			//m_HaxeWorld.sync(bullet.getBody());
-			
-
-			var collision = new phx.Collision();
-			var arb = new phx.Arbiter(new phx.Allocator());
-			if(collision.testShapes(m_PlayerTank.getShape(), bullet.getShape(), arb))
-			{
-				MtEventManager.getInstance().queueEvent(new MtTankBulletCollisionEvent(m_PlayerTank, cast bullet));
-			}
 			for(tank in m_EnemyTanks)
 			{
-				if(collision.testShapes(tank.getShape(), bullet.getShape(), arb))
-				{
-					MtEventManager.getInstance().queueEvent(new MtTankBulletCollisionEvent(tank, cast bullet));
-					MtEventManager.getInstance().trigger(new MtBulletDestroyedEvent(bullet));	
-				}
+				//TODO: Better way of doing this?
+				m_HaxeWorld.activate(tank.getBody());
 			}
 
-			//Check for collision between walls.
-			for(wall in m_WallShapes)
+			for (bullet in m_Bullets)
 			{
+				//TODO:Does this work?
+				//m_HaxeWorld.activate(bullet.getBody());
+				//m_HaxeWorld.sync(bullet.getBody());
+
+
 				var collision = new phx.Collision();
 				var arb = new phx.Arbiter(new phx.Allocator());
-				if(collision.testShapes(bullet.getShape(), wall, arb))
+				if(collision.testShapes(m_PlayerTank.getShape(), bullet.getShape(), arb))
 				{
-					MtEventManager.getInstance().trigger(new MtBulletWallCollisionEvent(cast bullet));
+					MtEventManager.getInstance().queueEvent(new MtTankBulletCollisionEvent(m_PlayerTank, cast bullet));
 				}
-			}
+				for(tank in m_EnemyTanks)
+				{
+					if(collision.testShapes(tank.getShape(), bullet.getShape(), arb))
+					{
+						MtEventManager.getInstance().queueEvent(new MtTankBulletCollisionEvent(tank, cast bullet));
+						MtEventManager.getInstance().trigger(new MtBulletDestroyedEvent(bullet));	
+					}
+				}
 
-/*
-			if(MtCollisionDetector.getInstance().bodyWithinSphere(bullet, m_PlayerTank))
-			{
-				MtEventManager.getInstance().queueEvent(new MtTankBulletCollisionEvent(m_PlayerTank, cast bullet));
+				//Check for collision between walls.
+				for(wall in m_WallShapes)
+				{
+					var collision = new phx.Collision();
+					var arb = new phx.Arbiter(new phx.Allocator());
+					if(collision.testShapes(bullet.getShape(), wall, arb))
+					{
+						MtEventManager.getInstance().trigger(new MtBulletWallCollisionEvent(cast bullet));
+					}
+				}
+
+
 			}
-*/
-			
+			m_HaxeWorld.step(actualTimeStep,20);
 		}
-
-
-		m_HaxeWorld.step(1,20);
 
 
 /*

@@ -9,13 +9,14 @@ Done List
 
 TODO List
 #########
-- Go over event code make sure it can't be made easier to add events.
-- Add in AI logic with Haxe including weapons ( laser, bullet, cannon )
 - Death and respawn animations.
-- Add in levels.
+- Add in AI logic with Haxe including weapons ( laser, bullet, cannon )
 - Sounds! (CCMixter.org and findsounds.org)
+- Go over event code make sure it can't be made easier to add events.
+- Add in levels.
 - Make world 550w*700h like http://www.digyourowngrave.com/hello-worlds/
 
 Would be cool List
 ##################
 - Add in vortexes
+- Individual names for tanks
