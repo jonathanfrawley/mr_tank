@@ -135,13 +135,13 @@ class MtPhysicsHandler implements MtEventListener
 				var arb = new phx.Arbiter(new phx.Allocator());
 				if(collision.testShapes(m_PlayerTank.getShape(), bullet.getShape(), arb))
 				{
-					MtEventManager.getInstance().queueEvent(new MtTankBulletCollisionEvent(m_PlayerTank, cast bullet));
+					MtEventManager.getInstance().trigger(new MtTankBulletCollisionEvent(m_PlayerTank, cast bullet));
 				}
 				for(tank in m_EnemyTanks)
 				{
 					if(collision.testShapes(tank.getShape(), bullet.getShape(), arb))
 					{
-						MtEventManager.getInstance().queueEvent(new MtTankBulletCollisionEvent(tank, cast bullet));
+						MtEventManager.getInstance().trigger(new MtTankBulletCollisionEvent(tank, cast bullet));
 						MtEventManager.getInstance().trigger(new MtBulletDestroyedEvent(bullet));	
 					}
 				}
@@ -323,6 +323,7 @@ class MtPhysicsHandler implements MtEventListener
 			var eventBullet = event.getBullet();
 			m_HaxeWorld.removeBody(eventBullet.getBody());
 			m_Bullets.remove(eventBullet);
+			trace("BULLET BEING REMOVED");
 		}
 		else if(event.getType() == MT_EVENT_TANKDESTROYED)
 		{

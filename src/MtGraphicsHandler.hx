@@ -38,6 +38,7 @@ class MtGraphicsHandler implements MtEventListener
 	private var m_BulletGraphics:List<MtBulletGraphics>;
 	private var m_EnemyTanksGraphics:List<MtTankGraphics>;
 	private var m_HealthBarsGraphics:List<MtHealthBarGraphics>;
+	private var m_ExplosionGraphics:List<MtExplosionGraphics>;
 	private var m_IsEndScreen:Bool;
 	private var m_IsPlayerDead:Bool;
  
@@ -51,6 +52,7 @@ class MtGraphicsHandler implements MtEventListener
 		m_BulletGraphics = new List<MtBulletGraphics>();
 		m_EnemyTanksGraphics = new List<MtTankGraphics>();
 		m_HealthBarsGraphics = new List<MtHealthBarGraphics>();
+		m_ExplosionGraphics = new List<MtExplosionGraphics>();
 		m_IsEndScreen = false;
 		m_IsPlayerDead = false;
 	}
@@ -88,6 +90,18 @@ class MtGraphicsHandler implements MtEventListener
 			for(healthBarGraphics in m_HealthBarsGraphics)
 			{
 				healthBarGraphics.draw(m_MovieClip);
+			}
+			for(explosionGraphics in m_ExplosionGraphics)
+			{
+				if( ! explosionGraphics.isFinished())
+				{
+					explosionGraphics.advance(0.2);
+					explosionGraphics.draw(m_MovieClip);
+				}
+				else
+				{
+					m_ExplosionGraphics.remove(explosionGraphics);
+				}
 			}
 		}
 		else
@@ -227,9 +241,14 @@ class MtGraphicsHandler implements MtEventListener
 				if(bullet.equals(bulletGraphics.getBullet()))
 				{
 					m_BulletGraphics.remove(bulletGraphics);
-					return true;
+					break;
 				}
 			}
+			//Create explosion effect for bullet
+			var explosionGraphics = new MtBulletExplosionGraphics();
+			explosionGraphics.init(bullet);
+			m_ExplosionGraphics.add(explosionGraphics);
+			
 		}
 		return true;
 	}
