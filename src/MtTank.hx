@@ -30,6 +30,10 @@ class MtTank extends MtPhysicsSphere
 	private var m_TurretDir:JfReal;
 	private static var MT_THROTTLE_SPEED:JfReal = 2;
 	private var m_Type:MtTankType;
+	private var m_IsLeftButtonPressed:Bool;
+	private var m_IsRightButtonPressed:Bool;
+	private var m_IsDownButtonPressed:Bool;
+	private var m_IsUpButtonPressed:Bool;
 
 	public function new(x:JfReal,y:JfReal, type:MtTankType)
 	{
@@ -39,6 +43,10 @@ class MtTank extends MtPhysicsSphere
 		//m_TurretDir = new JfVector2(1,0);
 		m_TurretDir = 0.0;
 		m_Type = type;
+		m_IsLeftButtonPressed = false;
+		m_IsRightButtonPressed = false;
+		m_IsDownButtonPressed = false;
+		m_IsUpButtonPressed = false;
 //		m_Speed = 3;
 	}
 
@@ -47,6 +55,20 @@ class MtTank extends MtPhysicsSphere
 		return m_Type;	
 	}
 
+	public function isAnyButtonPressed():Bool
+	{
+		if( m_IsLeftButtonPressed ||
+			m_IsRightButtonPressed ||
+			m_IsDownButtonPressed ||
+			m_IsUpButtonPressed )
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 /*
 	public function step(timeStep:JfReal)
@@ -92,6 +114,7 @@ class MtTank extends MtPhysicsSphere
 
 //		trace("Hello UP PRESSED"); 
 //		trace(m_HaxeBody);
+		m_IsUpButtonPressed = true;
 		m_HaxeBody.setSpeed(0 , -MT_THROTTLE_SPEED);
 //		m_HaxeBody.f = new phx.Vector(10 , MT_THROTTLE_SPEED*100);
 	}
@@ -106,7 +129,12 @@ class MtTank extends MtPhysicsSphere
 		}
 */
 
-		m_HaxeBody.setSpeed(0 , 0);
+		m_IsUpButtonPressed = false;
+
+		if(! isAnyButtonPressed() )
+		{
+			m_HaxeBody.setSpeed(0 , 0);
+		}
 	}
 
 	public function downPressed()
@@ -115,6 +143,7 @@ class MtTank extends MtPhysicsSphere
 //		m_Dir = Math.PI / 2;
 //		m_Speed = MT_THROTTLE_SPEED;
 
+		m_IsDownButtonPressed = true;
 		m_HaxeBody.setSpeed(0 , MT_THROTTLE_SPEED);
 	}
 
@@ -125,8 +154,12 @@ class MtTank extends MtPhysicsSphere
 //		{
 //			m_Speed = 0;
 //		}
+		m_IsDownButtonPressed = false;
 
-		m_HaxeBody.setSpeed(0 , 0);
+		if(! isAnyButtonPressed() )
+		{
+			m_HaxeBody.setSpeed(0 , 0);
+		}
 	}
 
 	public function leftPressed()
@@ -135,6 +168,7 @@ class MtTank extends MtPhysicsSphere
 //		m_Dir = Math.PI;
 //		m_Speed = MT_THROTTLE_SPEED;
 
+		m_IsLeftButtonPressed = true;
 		m_HaxeBody.setSpeed(-MT_THROTTLE_SPEED , 0);
 	}
 
@@ -147,8 +181,12 @@ class MtTank extends MtPhysicsSphere
 			m_Speed = 0;
 		}
 */
+		m_IsLeftButtonPressed = false;
 
-		m_HaxeBody.setSpeed(0 , 0);
+		if(! isAnyButtonPressed() )
+		{
+			m_HaxeBody.setSpeed(0 , 0);
+		}
 	}
 
 	public function rightPressed()
@@ -157,6 +195,7 @@ class MtTank extends MtPhysicsSphere
 //		m_Dir = 0;
 //		m_Speed = MT_THROTTLE_SPEED;
 
+		m_IsRightButtonPressed = true;
 		m_HaxeBody.setSpeed(MT_THROTTLE_SPEED , 0);
 	}
 
@@ -167,8 +206,12 @@ class MtTank extends MtPhysicsSphere
 //		{
 //			m_Speed = 0;
 //		}
+		m_IsRightButtonPressed = false;
 
-		m_HaxeBody.setSpeed(0 , 0);
+		if(! isAnyButtonPressed() )
+		{
+			m_HaxeBody.setSpeed(0 , 0);
+		}
 	}
 
 	public function move(dir:Float)
