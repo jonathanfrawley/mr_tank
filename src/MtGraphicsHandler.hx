@@ -176,6 +176,7 @@ class MtGraphicsHandler implements MtEventListener
 		}
 		else if(event.getType() == MT_EVENT_TANK_TANK_COLLISION)
 		{
+/*
 			var event : MtTankTankCollisionEvent = cast event;
 			var tank0 : MtTank = event.getTank0();
 			var tank1 : MtTank = event.getTank1();
@@ -193,6 +194,7 @@ class MtGraphicsHandler implements MtEventListener
 					m_EnemyTanksGraphics.remove(enemyTankGraphics);
 				}
 			}
+*/
 		}
 		else if(event.getType() == MT_EVENT_HEALTH_BAR_CREATED)
 		{

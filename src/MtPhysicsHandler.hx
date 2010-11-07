@@ -116,12 +116,20 @@ class MtPhysicsHandler implements MtEventListener
 		 * Doing multiple iterations of the physics loop will help to find bugs.
 		 * XXX:This will cause major problems when it comes to animating the explosions. Make sure only one collision event gets called per collision pair during one loop somehow!
 		 */
+
+		var collision = new phx.Collision();
+		var arb = new phx.Arbiter(new phx.Allocator());
 		for(i in 0...numIterations)
 		{
 			for(tank in m_EnemyTanks)
 			{
 				//TODO: Better way of doing this?
 				m_HaxeWorld.activate(tank.getBody());
+				//TODO:Stateful way of handling collisions.
+				if(collision.testShapes(m_PlayerTank.getShape(), tank.getShape(), arb))
+				{
+//					MtEventManager.getInstance().trigger(new MtTankTankCollisionEvent(m_PlayerTank, tank));
+				}
 			}
 
 			for (bullet in m_Bullets)
@@ -131,8 +139,6 @@ class MtPhysicsHandler implements MtEventListener
 				//m_HaxeWorld.sync(bullet.getBody());
 
 
-				var collision = new phx.Collision();
-				var arb = new phx.Arbiter(new phx.Allocator());
 				if(collision.testShapes(m_PlayerTank.getShape(), bullet.getShape(), arb))
 				{
 					MtEventManager.getInstance().trigger(new MtTankBulletCollisionEvent(m_PlayerTank, cast bullet));
@@ -334,6 +340,15 @@ class MtPhysicsHandler implements MtEventListener
 			m_HaxeWorld.removeBody(eventTank.getBody());
 			m_EnemyTanks.remove(eventTank);
 			
+		}
+		else if (event.getType()==MT_EVENT_TANKMOVED)
+		{
+			var event : MtTankMovedEvent = cast event;
+			for(enemyTank in m_EnemyTanks)
+			{
+				enemyTank.setDirection(event.getDir());
+				enemyTank.setSpeed(1); //XXX:Magic Number
+			}
 		}
 		//m_PlayerTank.getBody().setSpeed(10,10);
 		return true;

@@ -197,6 +197,18 @@ class MtGameLogic extends MtBaseGame, implements MtEventListener
 			//If not already in pending bullets, add it.
 			m_PendingBullets.add(bullet);
 		}
+		else if(event.getType() == MT_EVENT_TANK_TANK_COLLISION)
+		{
+			var event : MtTankTankCollisionEvent = cast event;
+			var tank = event.getTank0();	
+			for(healthBar in m_HealthBars)
+			{
+				if(tank == healthBar.getTank())
+				{
+					healthBar.registerHit();
+				}
+			}
+		}
 
 		return true;
 	}

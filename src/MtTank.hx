@@ -221,4 +221,14 @@ class MtTank extends MtPhysicsSphere
 		m_Speed = MT_THROTTLE_SPEED;
 	}
 
+	public function setDirection(a:Float)
+	{
+		m_HaxeBody.setAngle(a);
+	}
+
+	public function setSpeed(s:Float)
+	{
+		m_HaxeBody.setSpeed(s*Math.cos(m_HaxeBody.a),s*Math.sin(m_HaxeBody.a)); //TODO:
+	}
+
 }
