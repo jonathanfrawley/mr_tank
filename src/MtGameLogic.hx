@@ -196,6 +196,8 @@ class MtGameLogic extends MtBaseGame, implements MtEventListener
 			}
 			//If not already in pending bullets, add it.
 			m_PendingBullets.add(bullet);
+//			MtEventManager.getInstance().trigger(new MtButtonAPressedEvent());
+//			MtEventManager.getInstance().trigger(new MtLeftPressedEvent(MT_PLAYER_0));
 		}
 		else if(event.getType() == MT_EVENT_TANK_TANK_COLLISION)
 		{
