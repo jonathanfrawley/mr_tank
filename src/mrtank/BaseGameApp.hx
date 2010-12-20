@@ -15,30 +15,38 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
+package mrtank;
 
-import flash.display.MovieClip;
-import flash.events.Event;
+import mrtank.BaseGameLogic;
 
-import mrtank.BaseGameApp;
-import mrtank.TankGameApp;
-
-class Main 
+class BaseGameApp implements IGameApp
 {
-	public static var m_GameApp : mrtank.BaseGameApp;
+	private var m_GameLogic : IGameLogic;
+	private var m_GameView : IGameView;
 
-	static function main() 
+	public function new()
 	{
-		m_GameApp = new TankGameApp();
-		
-		if( m_GameApp.Init() )
+	}
+
+	public function Init() : Bool
+	{
+		if( ! CreateGameLogicAndView())
 		{
-			flash.Lib.current.addEventListener(flash.events.Event.ENTER_FRAME, mainLoop);
+			return false;
 		}
-	}    
+		return true;
+	}
 
-	public static function mainLoop(a)
+	public function MainLoop() : Bool
 	{
-		m_GameApp.MainLoop();
+		EventManager.GetInstance().Tick();
+		m_GameLogic.OnUpdate();	
+		m_GameView.OnRender();
+		return true;
+	}
+
+	private function CreateGameLogicAndView() : Bool
+	{
+		return true;
 	}
 }
-

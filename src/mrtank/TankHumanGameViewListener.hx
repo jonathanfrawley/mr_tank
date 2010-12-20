@@ -16,24 +16,37 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-import MtGameLogic;
+package mrtank;
 
-class MtGameApp
+import mrtank.IEventListener;
+import mrtank.EventType;
+
+class TankHumanGameViewListener implements IEventListener
 {
-	private var m_GameLogic : MtGameLogic;
+	private var m_View : TankHumanGameView;
 
-	public function new()
+	public function new(view : TankHumanGameView)
 	{
-		m_GameLogic = new MtGameLogic();
+		m_View = view;
 	}
 
-	public function init() : Bool
+	public function Init() : Bool
 	{
-		return m_GameLogic.init();
+		return true;
 	}
 
-	public function mainLoop() : Bool
+	public function GetName():String
 	{
-		return m_GameLogic.mainLoop();
+		return "TankGameViewListener";
+	}
+
+	public function HandleEvent( event:IEvent ) : Bool
+	{
+		if(event.GetType() == MT_EVENT_GameState)
+		{
+			//Show loading message.	
+			trace("Loading");
+		}
+		return true;
 	}
 }

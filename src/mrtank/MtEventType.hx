@@ -16,29 +16,44 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-import flash.display.MovieClip;
-import flash.events.Event;
-
-import mrtank.BaseGameApp;
-import mrtank.TankGameApp;
-
-class Main 
+enum MtEventType
 {
-	public static var m_GameApp : mrtank.BaseGameApp;
+	MT_EVENT_GAME_STATE;
 
-	static function main() 
-	{
-		m_GameApp = new TankGameApp();
-		
-		if( m_GameApp.Init() )
-		{
-			flash.Lib.current.addEventListener(flash.events.Event.ENTER_FRAME, mainLoop);
-		}
-	}    
 
-	public static function mainLoop(a)
-	{
-		m_GameApp.MainLoop();
-	}
+
+
+	MT_EVENT_GAMELOADED;
+	MT_EVENT_GAMEEND;
+	MT_EVENT_PLAYERHIT;
+	MT_EVENT_PLAYERDEAD;
+
+	MT_EVENT_TANKCREATED;
+	MT_EVENT_TANKMOVED;
+	MT_EVENT_ENEMYTANKCREATED;
+	MT_EVENT_BULLETCREATED;
+	MT_EVENT_HEALTH_BAR_CREATED;
+
+	MT_EVENT_TANK_BULLET_COLLISION;
+	MT_EVENT_TANK_TANK_COLLISION;
+	MT_EVENT_BULLET_WALL_COLLISION;
+
+	MT_EVENT_TANKDESTROYED;
+	MT_EVENT_BULLETDESTROYED;
+
+	MT_EVENT_UPPRESSED;
+	MT_EVENT_UPDEPRESSED;
+	MT_EVENT_DOWNPRESSED;
+	MT_EVENT_DOWNDEPRESSED;
+	MT_EVENT_RIGHTPRESSED;
+	MT_EVENT_RIGHTDEPRESSED;
+	MT_EVENT_LEFTPRESSED;
+	MT_EVENT_LEFTDEPRESSED;
+
+	MT_EVENT_BUTTONAPRESSED;
+	MT_EVENT_BUTTONSPRESSED;
+	
+	MT_EVENT_MBLEFTPRESSED;
+	MT_EVENT_MOUSEMOVED;
 }
 
