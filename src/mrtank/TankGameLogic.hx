@@ -31,11 +31,15 @@ class TankGameLogic extends BaseGameLogic
 {
 	private var m_GameViews : FastList<IGameView>;
 	private var m_State : GameState;
+	private var m_LastActorId : ActorId;
+	private var m_GamePhysics : TankGamePhysics;
 	
 	public function new()
 	{
 		super();
 		m_GameViews = new FastList<IGameView>();
+		m_GamePhysics = new TankGamePhysics();
+		m_LastActorId = 0;
 	}
 
 	public override function Init() : Bool
@@ -47,8 +51,10 @@ class TankGameLogic extends BaseGameLogic
 
 		var eventListener : IEventListener = new TankGameLogicListener(this);
 		ListenToTankGameLogicEvents(eventListener);
+
+		m_State = MT_GS_Start;
 		
-		EventManager.GetInstance().QueueEvent( new GameStateEvent(MT_GS_Init) );
+//		EventManager.GetInstance().QueueEvent( new GameStateEvent(MT_GS_Init) );
 
 		//TODO: Other init stuff.
 		return true;
@@ -61,6 +67,22 @@ class TankGameLogic extends BaseGameLogic
 
 	public override function OnUpdate() : Bool
 	{
+		
+		switch(m_State)
+		{
+			case MT_GS_Start:
+				ChangeState(MT_GS_Init);
+			case MT_GS_Init:
+				ChangeState(MT_GS_LevelLoading);
+			case MT_GS_LevelLoading:
+				//TODO:Handle multiple level options
+				CreateLevel(0);
+				ChangeState(MT_GS_Running);
+			case MT_GS_Running:
+			default:
+				trace("Invalid state reached");
+		}
+
 		for(gameView in m_GameViews)
 		{
 			gameView.OnUpdate();
@@ -68,9 +90,41 @@ class TankGameLogic extends BaseGameLogic
 		return true;
 	}
 
+	public function ChangeState(newState : GameState) : Void
+	{
+		m_State = newState;
+		EventManager.GetInstance().QueueEvent( new GameStateEvent(newState) );
+	}
+
+	public function CreateLevel(levelNum : Int)
+	{
+		switch(levelNum)
+		{
+			case 0:
+				var playerTankRadius : Float;
+				playerTankRadius = 2.0;
+				var playerTank : TankActor;
+				playerTank = new TankActor(playerTankRadius);
+				EventManager.GetInstance().QueueEvent( new RequestNewActorEvent(playerTank) );
+			default:
+				trace("Invalid level choice");
+		}
+	}
+
 	public function ListenToTankGameLogicEvents( eventListener : IEventListener ) : Void
 	{	
 		//TODO:Add appropriate events here.
 		EventManager.GetInstance().AddListener(eventListener, MT_EVENT_GameState);
+	}
+
+	public function GetNewActorId() : ActorId
+	{
+		m_LastActorId++;
+		return m_LastActorId;
+	}
+
+	public function GetGamePhysics() : TankGamePhysics
+	{
+		return m_GamePhysics;
 	}
 }

@@ -21,7 +21,9 @@ package mrtank;
 enum EventType
 {
 	MT_EVENT_GameState;
-
+	MT_EVENT_RequestNewActor;
+	MT_EVENT_NewActor;
+/*
 	MT_EVENT_GAMELOADED;
 	MT_EVENT_GAMEEND;
 	MT_EVENT_PLAYERHIT;
@@ -54,4 +56,5 @@ enum EventType
 	
 	MT_EVENT_MBLEFTPRESSED;
 	MT_EVENT_MOUSEMOVED;
+*/
 }

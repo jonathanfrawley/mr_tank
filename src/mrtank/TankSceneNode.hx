@@ -18,10 +18,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package mrtank;
 
-enum GameState
+class TankSceneNode extends BaseSceneNode
 {
-	MT_GS_Start;
-	MT_GS_Init;
-	MT_GS_LevelLoading;
-	MT_GS_Running;
+    private var m_Circle : flash.display.Shape;
+
+	public function new(radius:Float)
+	{
+		super();
+		m_Circle = new flash.display.Shape();
+		m_Circle.graphics.beginFill ( 0xEE0000 );
+		m_Circle.graphics.lineStyle ( 1, 0x000000, 1, false, flash.display.LineScaleMode.NONE );
+        //m_Circle.graphics.drawCircle ( tank.getPos().getX(), tank.getPos().getY(), tank.getRadius());
+        m_Circle.graphics.drawCircle ( radius, radius, radius);
+        m_Circle.graphics.endFill();
+	}
+
+	public override function OnRender() : Void
+	{
+		trace("Rendering tank");
+		flash.Lib.current.addChild(m_Circle);
+	}
+
+
 }

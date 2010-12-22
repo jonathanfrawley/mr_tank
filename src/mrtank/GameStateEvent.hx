@@ -22,12 +22,17 @@ import mrtank.EventType;
 
 class GameStateEvent extends BaseEvent
 {
-	private var m_State(default, null) : GameState;
+	private var m_State : GameState;
 
 	public function new(state:GameState)
 	{
 		super(MT_EVENT_GameState);	
 		m_State = state;
+	}
+
+	public function GetState() : GameState
+	{
+		return m_State;
 	}
 
 }

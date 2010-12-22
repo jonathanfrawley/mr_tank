@@ -18,10 +18,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package mrtank;
 
-enum GameState
+interface IActor
 {
-	MT_GS_Start;
-	MT_GS_Init;
-	MT_GS_LevelLoading;
-	MT_GS_Running;
+	public function GetPos() : Point2;
+	public function SetPos( val : Point2 ) : Void;
+
+	public function GetOrientation() : Float;
+
+	public function SetId( val : ActorId ) : Void;
+	public function GetId() : ActorId;
+
+	public function SetViewId( val : ViewId ) : Void;
+	public function GetViewId() : ViewId;
+
+	public function GetType() : ActorType;
 }

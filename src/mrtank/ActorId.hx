@@ -18,10 +18,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package mrtank;
 
-enum GameState
-{
-	MT_GS_Start;
-	MT_GS_Init;
-	MT_GS_LevelLoading;
-	MT_GS_Running;
-}
+typedef ActorId = Int;

@@ -18,10 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package mrtank;
 
-enum GameState
+interface IPhysics
 {
-	MT_GS_Start;
-	MT_GS_Init;
-	MT_GS_LevelLoading;
-	MT_GS_Running;
+	public function Add(actor:IActor);
 }

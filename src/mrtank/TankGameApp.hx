@@ -42,6 +42,7 @@ class TankGameApp extends BaseGameApp
 		{
 			return false;
 		}
+		m_GameView = playerView;
 		m_GameLogic.OnAttach(playerView);
 
 		return true;

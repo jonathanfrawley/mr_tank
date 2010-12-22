@@ -23,9 +23,12 @@ import mrtank.EventType;
 
 class TankHumanGameView extends BaseGameView
 {
+	private var m_ActorId : ActorId;
+
 	public function new()
 	{
 		super();
+		m_ActorId = -1;
 	}
 
 	public override function Init() : Bool
@@ -39,6 +42,11 @@ class TankHumanGameView extends BaseGameView
 	public function ListenToTankGameViewEvents(eventListener : IEventListener) : Void
 	{
 		EventManager.GetInstance().AddListener(eventListener, MT_EVENT_GameState);
+	}
+
+	public function SetActor(actorId : ActorId)
+	{
+		m_ActorId = actorId;
 	}
 
 }

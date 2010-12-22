@@ -18,10 +18,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package mrtank;
 
-enum GameState
+import mrtank.EventType;
+
+class RequestNewActorEvent extends BaseEvent
 {
-	MT_GS_Start;
-	MT_GS_Init;
-	MT_GS_LevelLoading;
-	MT_GS_Running;
+	private var m_Actor : IActor;
+
+	public function new(actor:IActor)
+	{
+		super(MT_EVENT_RequestNewActor);	
+		m_Actor = actor;
+	}
+
+	public function GetActor() : IActor
+	{
+		return m_Actor;
+	}
 }

@@ -20,6 +20,7 @@ package mrtank;
 
 import mrtank.IEventListener;
 import mrtank.EventType;
+import mrtank.ActorType;
 
 class TankHumanGameViewListener implements IEventListener
 {
@@ -44,8 +45,51 @@ class TankHumanGameViewListener implements IEventListener
 	{
 		if(event.GetType() == MT_EVENT_GameState)
 		{
-			//Show loading message.	
-			trace("Loading");
+			var castEvent : GameStateEvent = cast event;	
+			var state : GameState;
+			state = castEvent.GetState();
+			switch(state)
+			{
+				case MT_GS_Start:
+					trace("Handing Start Event");
+				case MT_GS_Init:
+					trace("Handing Init Event");
+				case MT_GS_LevelLoading:
+					trace("Handing LevelLoading Event");
+				case MT_GS_Running:
+					trace("Handing Running Event");
+				default:
+					trace("Invalid state reached");
+			}
+		}
+		else if (event.GetType() == MT_EVENT_NewActor)
+		{
+			trace("New Actor event");
+			var castEvent : NewActorEvent = cast event;	
+			var actor = castEvent.GetActor();
+
+			var newSceneNode:TankSceneNode;
+			newSceneNode = null;
+			if(actor.GetType() == MT_ACTOR_Tank)
+			{
+				var castActor : TankActor = cast actor;
+				newSceneNode = new TankSceneNode(castActor.GetRadius());
+				trace("In if");
+				newSceneNode.SetPos(actor.GetPos());
+				newSceneNode.SetOrientation(actor.GetOrientation());
+				newSceneNode.SetId(actor.GetId());
+				if(newSceneNode.GetViewId() == m_View.GetId())
+				{
+					m_View.SetActor(actor.GetId());
+				}
+				//newSceneNode.SetViewId(actor.GetViewId());
+			}
+
+			if(newSceneNode != null)
+			{
+				m_View.AddSceneNode(newSceneNode);
+			}
+			trace("After if");
 		}
 		return true;
 	}

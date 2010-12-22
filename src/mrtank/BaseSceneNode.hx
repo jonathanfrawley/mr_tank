@@ -15,53 +15,61 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
+
 package mrtank;
 
-import haxe.FastList;
-
-class BaseGameView implements IGameView
+class BaseSceneNode implements ISceneNode
 {
-	private var m_Id : ViewId;
-	private var m_SceneNodes : FastList<ISceneNode>;
-
+	private var m_Pos : Point2;
+	private var m_Orientation : Float;
+	private var m_Id : ActorId;
+	private var m_ViewId : ViewId;
+	
 	public function new()
 	{
-		m_SceneNodes = new FastList<ISceneNode>();
 	}
 
-	public function Init() : Bool
+	public function GetPos() : Point2
 	{
-		return true;
+		return m_Pos;
 	}
 
-	public function OnUpdate() : Bool
+	public function SetPos( val : Point2 ) : Void
 	{
-		return true;
+		m_Pos = val;
 	}
 
-	public function OnRender() : Bool
+	public function GetOrientation() : Float
 	{
-		for(node in m_SceneNodes)
-		{
-			node.OnRender();
-		}
-		return true;
+		return m_Orientation;
 	}
 
-	public function GetId() : ViewId
+	public function SetOrientation(val:Float) : Void
+	{
+		m_Orientation = val;
+	}
+
+	public function GetId() : ActorId
 	{
 		return m_Id;
 	}
 
-	public function SetId(id:ViewId) : Void
+	public function SetId( val : ActorId ) : Void
 	{
-		m_Id = id;
+		m_Id = val;
 	}
 
-	
-	public function AddSceneNode(node : ISceneNode) : Void
+	public function GetViewId() : ViewId
 	{
-		m_SceneNodes.add(node);
+		return m_ViewId;
 	}
 
+	public function SetViewId( val : ViewId ) : Void
+	{
+		m_ViewId = val;
+	}
+
+	public function OnRender() : Void
+	{
+	}
 }

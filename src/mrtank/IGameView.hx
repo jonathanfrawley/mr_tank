@@ -24,4 +24,10 @@ interface IGameView
 	function OnUpdate() : Bool;
 
 	function OnRender() : Bool;
+
+	function GetId() : ViewId;
+
+	function SetId(id:ViewId) : Void;
+
+	function AddSceneNode(node : ISceneNode) : Void;
 }

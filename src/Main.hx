@@ -28,6 +28,12 @@ class Main
 
 	static function main() 
 	{
+
+		if(haxe.Firebug.detect())
+		{
+			haxe.Firebug.redirectTraces();
+		}
+
 		m_GameApp = new TankGameApp();
 		
 		if( m_GameApp.Init() )

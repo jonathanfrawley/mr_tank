@@ -18,10 +18,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package mrtank;
 
-enum GameState
+class Point2
 {
-	MT_GS_Start;
-	MT_GS_Init;
-	MT_GS_LevelLoading;
-	MT_GS_Running;
+	private var m_X : Float;
+	private var m_Y : Float;
+
+	public function new(x:Float, y:Float)
+	{
+		m_X = x;
+		m_Y = y;
+	}
+
+	public function GetX() : Float 
+	{
+		return m_X;
+	}
+
+	public function SetX(val:Float) : Void 
+	{
+		m_X = val;
+	}
+
+	public function GetY() : Float 
+	{
+		return m_Y;
+	}
+
+	public function SetY(val:Float) : Void 
+	{
+		m_Y = val;
+	}
 }

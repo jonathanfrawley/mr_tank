@@ -18,10 +18,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package mrtank;
 
-enum GameState
+import mrtank.ActorType;
+
+class TankActor extends BaseActor
 {
-	MT_GS_Start;
-	MT_GS_Init;
-	MT_GS_LevelLoading;
-	MT_GS_Running;
+	private var m_Radius : Float;
+
+	public function new(radius:Float)
+	{
+		super(MT_ACTOR_Tank);
+		m_Radius = radius;
+	}
+
+	public function GetRadius() : Float
+	{
+		return m_Radius;
+	}
 }
