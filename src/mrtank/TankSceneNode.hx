@@ -21,10 +21,12 @@ package mrtank;
 class TankSceneNode extends BaseSceneNode
 {
     private var m_Circle : flash.display.Shape;
+	private var m_Radius : Float;
 
 	public function new(radius:Float)
 	{
 		super();
+		m_Radius = radius;
 		m_Circle = new flash.display.Shape();
 		m_Circle.graphics.beginFill ( 0xEE0000 );
 		m_Circle.graphics.lineStyle ( 1, 0x000000, 1, false, flash.display.LineScaleMode.NONE );
@@ -36,6 +38,10 @@ class TankSceneNode extends BaseSceneNode
 	public override function OnRender() : Void
 	{
 		trace("Rendering tank");
+
+		m_Circle.x = m_Pos.GetX() - m_Radius;
+		m_Circle.y = m_Pos.GetY() - m_Radius;
+
 		flash.Lib.current.addChild(m_Circle);
 	}
 

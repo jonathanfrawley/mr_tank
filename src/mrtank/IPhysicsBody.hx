@@ -18,18 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package mrtank;
 
-class BasePhysics
+interface IPhysicsBody 
 {
-	public function new()
-	{
-	}
+	public function SetId( val : ActorId ) : Void;
+	public function GetId() : ActorId;
 
-	public function Add(actor:IActor)
-	{
-		//TODO
-	}
-
-	public function Step(timeStep:Float)
-	{
-	}
+	public function SetBody( val : phx.Body ) : Void;
+	public function GetBody() : phx.Body;
 }

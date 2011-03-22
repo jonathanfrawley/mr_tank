@@ -42,6 +42,7 @@ class TankHumanGameView extends BaseGameView
 	public function ListenToTankGameViewEvents(eventListener : IEventListener) : Void
 	{
 		EventManager.GetInstance().AddListener(eventListener, MT_EVENT_GameState);
+		EventManager.GetInstance().AddListener(eventListener, MT_EVENT_ActorMoved);
 	}
 
 	public function SetActor(actorId : ActorId)

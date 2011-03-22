@@ -28,6 +28,7 @@ class BaseActor implements IActor
 	
 	public function new(type:ActorType)
 	{
+		m_Pos = new Point2(0,0);
 		m_Type = type;
 	}
 

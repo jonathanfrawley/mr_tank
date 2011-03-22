@@ -83,6 +83,8 @@ class TankGameLogic extends BaseGameLogic
 				trace("Invalid state reached");
 		}
 
+		m_GamePhysics.Step( 1.0 / 60 );
+
 		for(gameView in m_GameViews)
 		{
 			gameView.OnUpdate();

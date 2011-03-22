@@ -18,18 +18,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package mrtank;
 
-class BasePhysics
+import mrtank.EventType;
+
+class ActorMovedEvent extends BaseEvent
 {
-	public function new()
+	private var m_Id : ActorId;
+	private var m_Pos : Point2;
+	private var m_Orientation : Float;
+
+	public function new(id:ActorId, pos:Point2, orientation:Float)
 	{
+		super(MT_EVENT_ActorMoved);	
+		m_Id = id;
+		m_Pos = pos;
+		m_Orientation = orientation;
 	}
 
-	public function Add(actor:IActor)
+	public function GetId() : ActorId
 	{
-		//TODO
+		return m_Id;
 	}
 
-	public function Step(timeStep:Float)
+	public function GetPos() : Point2
 	{
+		return m_Pos;
+	}
+
+	public function GetOrientation() : Float 
+	{
+		return m_Orientation;
 	}
 }

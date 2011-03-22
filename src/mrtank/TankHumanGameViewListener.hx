@@ -91,6 +91,16 @@ class TankHumanGameViewListener implements IEventListener
 			}
 			trace("After if");
 		}
+		else if (event.GetType() == MT_EVENT_ActorMoved)
+		{
+			trace("Actor Moved Event Handled in GameView");
+			var castEvent : ActorMovedEvent = cast event;	
+			var id = castEvent.GetId();
+			var pos = castEvent.GetPos();
+			var orientation = castEvent.GetOrientation();
+				
+			m_View.UpdateSceneNode(id, pos, orientation);
+		}
 		return true;
 	}
 }

@@ -45,7 +45,6 @@ class TankGameLogicListener implements IEventListener
 	{
 		if(event.GetType() == MT_EVENT_GameState)
 		{
-						
 		}
 		else if (event.GetType() == MT_EVENT_RequestNewActor)
 		{
@@ -60,6 +59,7 @@ class TankGameLogicListener implements IEventListener
 			var actor = castEvent.GetActor();
 			trace("New Actor event");
 			m_Logic.GetGamePhysics().Add(actor);
+			trace("AfterAdding actor event");
 		}
 		return true;
 	}

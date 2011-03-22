@@ -17,6 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 package mrtank;
 
+import mrtank.Point2;
+
 interface IGameView
 {
 	function Init() : Bool;
@@ -30,4 +32,6 @@ interface IGameView
 	function SetId(id:ViewId) : Void;
 
 	function AddSceneNode(node : ISceneNode) : Void;
+
+	function UpdateSceneNode(id:ActorId, pos:Point2, orientation:Float) : Void;
 }

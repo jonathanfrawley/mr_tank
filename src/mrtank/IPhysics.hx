@@ -21,4 +21,5 @@ package mrtank;
 interface IPhysics
 {
 	public function Add(actor:IActor);
+	public function Step(timeStep:Float);
 }

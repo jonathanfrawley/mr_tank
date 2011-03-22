@@ -57,11 +57,24 @@ class BaseGameView implements IGameView
 	{
 		m_Id = id;
 	}
-
 	
 	public function AddSceneNode(node : ISceneNode) : Void
 	{
 		m_SceneNodes.add(node);
+	}
+
+	public function UpdateSceneNode(id:ActorId, pos:Point2, orientation:Float)
+	{
+		for(node in m_SceneNodes)
+		{
+			if(node.GetId() == id)
+			{
+				trace("Ho");
+				node.SetPos(pos);
+				node.SetOrientation(orientation);
+				return;
+			}
+		}
 	}
 
 }
