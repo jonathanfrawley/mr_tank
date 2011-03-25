@@ -16,35 +16,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-import flash.display.MovieClip;
-import flash.events.Event;
+package mrtank.physics;
 
-import mrtank.gameapp.BaseGameApp;
-import mrtank.gameapp.TankGameApp;
-
-class Main 
+interface IPhysics
 {
-	public static var m_GameApp : BaseGameApp;
-
-	static function main() 
-	{
-
-		if(haxe.Firebug.detect())
-		{
-			haxe.Firebug.redirectTraces();
-		}
-
-		m_GameApp = new TankGameApp();
-		
-		if( m_GameApp.Init() )
-		{
-			flash.Lib.current.addEventListener(flash.events.Event.ENTER_FRAME, mainLoop);
-		}
-	}    
-
-	public static function mainLoop(a)
-	{
-		m_GameApp.MainLoop();
-	}
+	public function Add(actor:IActor);
+	public function Step(timeStep:Float);
 }
-

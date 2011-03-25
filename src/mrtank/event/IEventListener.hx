@@ -16,35 +16,18 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-import flash.display.MovieClip;
-import flash.events.Event;
+package mrtank.event;
 
-import mrtank.gameapp.BaseGameApp;
-import mrtank.gameapp.TankGameApp;
-
-class Main 
+interface IEventListener 
 {
-	public static var m_GameApp : BaseGameApp;
 
-	static function main() 
-	{
+	public function GetName():String;
 
-		if(haxe.Firebug.detect())
-		{
-			haxe.Firebug.redirectTraces();
-		}
-
-		m_GameApp = new TankGameApp();
-		
-		if( m_GameApp.Init() )
-		{
-			flash.Lib.current.addEventListener(flash.events.Event.ENTER_FRAME, mainLoop);
-		}
-	}    
-
-	public static function mainLoop(a)
-	{
-		m_GameApp.MainLoop();
-	}
+	/*
+	 *--------------------------------------------------------------------------------------
+	 *      Method:  HandleEvent
+	 * Description:  Returns true if consumes event, false otherwise.
+	 *--------------------------------------------------------------------------------------
+	 */
+	public function HandleEvent( event:IEvent ) : Bool; 
 }
-

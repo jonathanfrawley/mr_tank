@@ -16,35 +16,23 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-import flash.display.MovieClip;
-import flash.events.Event;
+package mrtank.actor;
 
-import mrtank.gameapp.BaseGameApp;
-import mrtank.gameapp.TankGameApp;
+import mrtank.algebra.Point2;
+import mrtank.gameview.ViewId;
 
-class Main 
+interface IActor
 {
-	public static var m_GameApp : BaseGameApp;
+	public function GetPos() : Point2;
+	public function SetPos( val : Point2 ) : Void;
 
-	static function main() 
-	{
+	public function GetOrientation() : Float;
 
-		if(haxe.Firebug.detect())
-		{
-			haxe.Firebug.redirectTraces();
-		}
+	public function SetId( val : ActorId ) : Void;
+	public function GetId() : ActorId;
 
-		m_GameApp = new TankGameApp();
-		
-		if( m_GameApp.Init() )
-		{
-			flash.Lib.current.addEventListener(flash.events.Event.ENTER_FRAME, mainLoop);
-		}
-	}    
+	public function SetViewId( val : ViewId ) : Void;
+	public function GetViewId() : ViewId;
 
-	public static function mainLoop(a)
-	{
-		m_GameApp.MainLoop();
-	}
+	public function GetType() : ActorType;
 }
-

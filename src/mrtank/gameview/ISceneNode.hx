@@ -15,38 +15,25 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
-package mrtank;
 
-import mrtank.BaseGameLogic;
+package mrtank.gameview;
 
-class BaseGameApp implements IGameApp
+import mrtank.algebra.Point2;
+import mrtank.actor.ActorId;
+
+interface ISceneNode
 {
-	private var m_GameLogic : IGameLogic;
-	private var m_GameView : IGameView;
+	public function GetPos() : Point2;
+	public function SetPos( val : Point2 ) : Void;
 
-	public function new()
-	{
-	}
+	public function GetOrientation() : Float;
+	public function SetOrientation(val : Float) : Void;
 
-	public function Init() : Bool
-	{
-		if( ! CreateGameLogicAndView())
-		{
-			return false;
-		}
-		return true;
-	}
+	public function SetId( val : ActorId ) : Void;
+	public function GetId() : ActorId;
 
-	public function MainLoop() : Bool
-	{
-		EventManager.GetInstance().Tick();
-		m_GameLogic.OnUpdate();	
-		m_GameView.OnRender();
-		return true;
-	}
+	public function SetViewId( val : ViewId ) : Void;
+	public function GetViewId() : ViewId;
 
-	private function CreateGameLogicAndView() : Bool
-	{
-		return true;
-	}
+	public function OnRender() : Void;
 }

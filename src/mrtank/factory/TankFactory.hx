@@ -15,15 +15,38 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
-package mrtank;
 
-import mrtank.BaseGameLogic;
+package mrtank.factory;
 
-interface IGameApp
+import mrtank.gameview.IGameView;
+import mrtank.gamelogic.IGameLogic;
+import mrtank.gameview.TankHumanGameView;
+import mrtank.gamelogic.TankGameLogic;
+
+class TankFactory implements IFactory
 {
-	public function Init() : Bool;
-
-	public function MainLoop() : Bool;
-
-	private function CreateGameLogicAndView() : Bool;
+	public function new()
+	{
+	}
+	
+	public function MakeLogic() : IGameLogic
+	{
+		var gameLogic : TankGameLogic;
+		gameLogic = new TankGameLogic();
+		if( ! gameLogic.Init() ) {
+			return null;
+		}
+		return gameLogic;
+	}
+	
+	public function MakeHumanGameView() : IGameView
+	{
+		var playerView : TankHumanGameView;
+		playerView = new TankHumanGameView();
+		if( ! playerView.Init() ) {
+			return null;
+		}
+		return playerView;
+	}
+   
 }

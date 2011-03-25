@@ -15,36 +15,24 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
+package mrtank.gameview;
 
-package mrtank;
+import mrtank.algebra.Point2;
+import mrtank.actor.ActorId;
 
-import mrtank.BaseGameApp;
-import mrtank.BaseGameView;
-import mrtank.TankHumanGameView;
-
-class TankGameApp extends BaseGameApp
+interface IGameView
 {
-	public function new()
-	{
-		super();
-	}
+	function Init() : Bool;
 
-	private override function CreateGameLogicAndView() : Bool
-	{
-		m_GameLogic = new TankGameLogic();
-		if( ! m_GameLogic.Init())
-		{
-			return false;
-		}
-		var playerView : TankHumanGameView;
-		playerView = new TankHumanGameView();
-		if( ! playerView.Init())
-		{
-			return false;
-		}
-		m_GameView = playerView;
-		m_GameLogic.OnAttach(playerView);
+	function OnUpdate() : Bool;
 
-		return true;
-	}
+	function OnRender() : Bool;
+
+	function GetId() : ViewId;
+
+	function SetId(id:ViewId) : Void;
+
+	function AddSceneNode(node : ISceneNode) : Void;
+
+	function UpdateSceneNode(id:ActorId, pos:Point2, orientation:Float) : Void;
 }

@@ -16,20 +16,29 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-package mrtank;
+package mrtank.event;
 
-class BaseActor implements IActor
+import mrtank.event.EventType;
+import mrtank.actor.ActorId;
+import mrtank.algebra.Point2;
+
+class ActorMovedEvent extends BaseEvent
 {
+	private var m_Id : ActorId;
 	private var m_Pos : Point2;
 	private var m_Orientation : Float;
-	private var m_Id : ActorId;
-	private var m_ViewId : ViewId;
-	private var m_Type : ActorType;
-	
-	public function new(type:ActorType)
+
+	public function new(id:ActorId, pos:Point2, orientation:Float)
 	{
-		m_Pos = new Point2(0,0);
-		m_Type = type;
+		super(MT_EVENT_ActorMoved);	
+		m_Id = id;
+		m_Pos = pos;
+		m_Orientation = orientation;
+	}
+
+	public function GetId() : ActorId
+	{
+		return m_Id;
 	}
 
 	public function GetPos() : Point2
@@ -37,36 +46,8 @@ class BaseActor implements IActor
 		return m_Pos;
 	}
 
-	public function SetPos( val : Point2 ) : Void
-	{
-		m_Pos = val;
-	}
-
-	public function GetOrientation() : Float
+	public function GetOrientation() : Float 
 	{
 		return m_Orientation;
-	}
-
-	public function SetId( val : ActorId ) : Void
-	{
-		m_Id = val;
-	}
-	public function GetId() : ActorId
-	{
-		return m_Id;
-	}
-
-	public function SetViewId( val : ViewId ) : Void
-	{
-		m_ViewId = val;
-	}
-	public function GetViewId() : ViewId
-	{
-		return m_ViewId;
-	}
-
-	public function GetType() : ActorType
-	{
-		return m_Type;
 	}
 }

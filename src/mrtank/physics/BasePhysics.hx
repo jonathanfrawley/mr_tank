@@ -16,22 +16,22 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-package mrtank;
+package mrtank.physics;
 
-import mrtank.EventType;
+import mrtank.actor.IActor;
 
-class RequestNewActorEvent extends BaseEvent
+class BasePhysics
 {
-	private var m_Actor : IActor;
-
-	public function new(actor:IActor)
+	public function new()
 	{
-		super(MT_EVENT_RequestNewActor);	
-		m_Actor = actor;
 	}
 
-	public function GetActor() : IActor
+	public function Add(actor:IActor)
 	{
-		return m_Actor;
+		//TODO
+	}
+
+	public function Step(timeStep:Float)
+	{
 	}
 }

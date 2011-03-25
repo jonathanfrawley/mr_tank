@@ -16,35 +16,37 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-import flash.display.MovieClip;
-import flash.events.Event;
+package mrtank.physics;
 
-import mrtank.gameapp.BaseGameApp;
-import mrtank.gameapp.TankGameApp;
+import mrtank.actor.ActorId;
 
-class Main 
+class BasePhysicsBody implements IPhysicsBody
 {
-	public static var m_GameApp : BaseGameApp;
-
-	static function main() 
+	private var m_Body : phx.Body;
+	private var m_Id : ActorId;
+	
+	public function new()
 	{
+		m_Body = null;
+	}
 
-		if(haxe.Firebug.detect())
-		{
-			haxe.Firebug.redirectTraces();
-		}
-
-		m_GameApp = new TankGameApp();
-		
-		if( m_GameApp.Init() )
-		{
-			flash.Lib.current.addEventListener(flash.events.Event.ENTER_FRAME, mainLoop);
-		}
-	}    
-
-	public static function mainLoop(a)
+	public function SetId( val : ActorId ) : Void
 	{
-		m_GameApp.MainLoop();
+		m_Id = val;
+	}
+
+	public function GetId() : ActorId
+	{
+		return m_Id;
+	}
+
+	public function SetBody( val : phx.Body ) : Void
+	{
+		m_Body = val;
+	}
+
+	public function GetBody() : phx.Body
+	{
+		return m_Body;
 	}
 }
-

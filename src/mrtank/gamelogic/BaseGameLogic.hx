@@ -15,21 +15,28 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
+package mrtank.gamelogic;
 
-package mrtank;
+import mrtank.gamelogic.IGameLogic;
+import mrtank.gameview.IGameView;
 
-interface IActor
+class BaseGameLogic implements IGameLogic
 {
-	public function GetPos() : Point2;
-	public function SetPos( val : Point2 ) : Void;
+	public function new()
+	{
+	}
 
-	public function GetOrientation() : Float;
+	public function Init() : Bool
+	{
+		return true;
+	}
 
-	public function SetId( val : ActorId ) : Void;
-	public function GetId() : ActorId;
+	public function OnAttach( view : IGameView) : Void
+	{
+	}
 
-	public function SetViewId( val : ViewId ) : Void;
-	public function GetViewId() : ViewId;
-
-	public function GetType() : ActorType;
+	public function OnUpdate() : Bool
+	{
+		return true;
+	}
 }

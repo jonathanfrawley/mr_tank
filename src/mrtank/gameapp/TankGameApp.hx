@@ -16,35 +16,20 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-import flash.display.MovieClip;
-import flash.events.Event;
+package mrtank.gameapp;
 
-import mrtank.gameapp.BaseGameApp;
-import mrtank.gameapp.TankGameApp;
+import mrtank.factory.TankFactory;
 
-class Main 
+class TankGameApp extends BaseGameApp
 {
-	public static var m_GameApp : BaseGameApp;
-
-	static function main() 
+	public function new()
 	{
+		super();
+	}
 
-		if(haxe.Firebug.detect())
-		{
-			haxe.Firebug.redirectTraces();
-		}
-
-		m_GameApp = new TankGameApp();
-		
-		if( m_GameApp.Init() )
-		{
-			flash.Lib.current.addEventListener(flash.events.Event.ENTER_FRAME, mainLoop);
-		}
-	}    
-
-	public static function mainLoop(a)
+	private override function CreateFactory() : Bool
 	{
-		m_GameApp.MainLoop();
+		m_Factory = new TankFactory();
+		return true;
 	}
 }
-

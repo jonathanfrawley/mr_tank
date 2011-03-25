@@ -15,24 +15,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
+package mrtank.gameapp;
 
-package mrtank;
-
-import mrtank.EventType;
-
-class GameStateEvent extends BaseEvent
+interface IGameApp
 {
-	private var m_State : GameState;
+	public function Init() : Bool;
 
-	public function new(state:GameState)
-	{
-		super(MT_EVENT_GameState);	
-		m_State = state;
-	}
+	private function CreateGameLogicAndView() : Bool;
 
-	public function GetState() : GameState
-	{
-		return m_State;
-	}
+	private function CreateFactory() : Bool;
 
+	public function MainLoop() : Bool;
 }

@@ -16,36 +16,19 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-package mrtank;
+package mrtank.event;
 
-import mrtank.EventType;
-
-class ActorMovedEvent extends BaseEvent
+class BaseEvent implements IEvent
 {
-	private var m_Id : ActorId;
-	private var m_Pos : Point2;
-	private var m_Orientation : Float;
+	private var m_Type : EventType;
 
-	public function new(id:ActorId, pos:Point2, orientation:Float)
+	public function new(type:EventType)
 	{
-		super(MT_EVENT_ActorMoved);	
-		m_Id = id;
-		m_Pos = pos;
-		m_Orientation = orientation;
+		m_Type = type;
 	}
 
-	public function GetId() : ActorId
+	public function GetType() : EventType
 	{
-		return m_Id;
-	}
-
-	public function GetPos() : Point2
-	{
-		return m_Pos;
-	}
-
-	public function GetOrientation() : Float 
-	{
-		return m_Orientation;
+		return m_Type;
 	}
 }

@@ -16,35 +16,36 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-import flash.display.MovieClip;
-import flash.events.Event;
+package mrtank.algebra;
 
-import mrtank.gameapp.BaseGameApp;
-import mrtank.gameapp.TankGameApp;
-
-class Main 
+class Point2
 {
-	public static var m_GameApp : BaseGameApp;
+	private var m_X : Float;
+	private var m_Y : Float;
 
-	static function main() 
+	public function new(x:Float, y:Float)
 	{
+		m_X = x;
+		m_Y = y;
+	}
 
-		if(haxe.Firebug.detect())
-		{
-			haxe.Firebug.redirectTraces();
-		}
-
-		m_GameApp = new TankGameApp();
-		
-		if( m_GameApp.Init() )
-		{
-			flash.Lib.current.addEventListener(flash.events.Event.ENTER_FRAME, mainLoop);
-		}
-	}    
-
-	public static function mainLoop(a)
+	public function GetX() : Float 
 	{
-		m_GameApp.MainLoop();
+		return m_X;
+	}
+
+	public function SetX(val:Float) : Void 
+	{
+		m_X = val;
+	}
+
+	public function GetY() : Float 
+	{
+		return m_Y;
+	}
+
+	public function SetY(val:Float) : Void 
+	{
+		m_Y = val;
 	}
 }
-
