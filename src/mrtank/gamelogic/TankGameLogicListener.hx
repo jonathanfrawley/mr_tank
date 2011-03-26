@@ -24,6 +24,7 @@ import mrtank.event.EventType;
 import mrtank.gamelogic.GameState;
 import mrtank.event.RequestNewActorEvent;
 import mrtank.event.NewActorEvent;
+import mrtank.event.ThrustEvent;
 import mrtank.event.EventManager;
 
 class TankGameLogicListener implements IEventListener
@@ -64,6 +65,13 @@ class TankGameLogicListener implements IEventListener
 			trace("New Actor event");
 			m_Logic.GetGamePhysics().Add(actor);
 			trace("AfterAdding actor event");
+		}
+		else if (event.GetType() == MT_EVENT_Thrust)
+		{
+			var castEvent : ThrustEvent = cast event;	
+			var actorId = castEvent.GetId();
+			var thrust = castEvent.GetThrust();
+			m_Logic.GetGamePhysics().AddThrust(actorId, thrust);
 		}
 		return true;
 	}

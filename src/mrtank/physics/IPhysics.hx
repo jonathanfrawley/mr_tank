@@ -22,4 +22,5 @@ interface IPhysics
 {
 	public function Add(actor:IActor);
 	public function Step(timeStep:Float);
+	public function AddThrust( actorId : ActorId, thrust : Vector2 ) : Void;
 }

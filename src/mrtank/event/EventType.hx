@@ -24,6 +24,7 @@ enum EventType
 	MT_EVENT_RequestNewActor;
 	MT_EVENT_NewActor;
 	MT_EVENT_ActorMoved;
+	MT_EVENT_Thrust;
 /*
 	MT_EVENT_GAMELOADED;
 	MT_EVENT_GAMEEND;

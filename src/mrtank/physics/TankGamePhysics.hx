@@ -21,7 +21,9 @@ package mrtank.physics;
 import haxe.FastList;
 import mrtank.actor.ActorType;
 import mrtank.actor.IActor;
+import mrtank.actor.ActorId;
 import mrtank.algebra.Point2;
+import mrtank.algebra.Vector2;
 import mrtank.event.EventManager;
 import mrtank.event.ActorMovedEvent;
 
@@ -42,9 +44,7 @@ class TankGamePhysics extends BasePhysics
 
 	public override function Add(actor:IActor)
 	{
-		trace("ewoj");
 		var body : IPhysicsBody = MakePhysicsBody( actor );
-		trace("ww");
 		m_Bodies.add( body );
 		m_World.addBody( body.GetBody() );
 	}
@@ -52,7 +52,6 @@ class TankGamePhysics extends BasePhysics
 	public function MakePhysicsBody( actor : IActor ) : IPhysicsBody
 	{
 		var physicsBody : IPhysicsBody = null;
-		//TODO
 		if( actor.GetType() == MT_ACTOR_Tank )
 		{
 			var body : phx.Body = new phx.Body(actor.GetPos().GetX(), actor.GetPos().GetY() );
@@ -60,7 +59,7 @@ class TankGamePhysics extends BasePhysics
 			body.addShape( shape );
 
 			//XXX:Remove
-			body.setSpeed(100,100); 
+			//body.setSpeed(100,100); 
 
 			physicsBody = new BasePhysicsBody();
 			physicsBody.SetId(actor.GetId());
@@ -72,7 +71,11 @@ class TankGamePhysics extends BasePhysics
 
 	public override function Step(timeStep:Float)
 	{
-		trace("Stepping");
+		for(body in m_Bodies)
+		{
+			m_World.activate(body.GetBody());
+		}	
+		
 		m_World.step(timeStep,20);
 
 		for(body in m_Bodies)
@@ -80,5 +83,15 @@ class TankGamePhysics extends BasePhysics
 			var newPos : Point2 = new Point2(body.GetBody().x, body.GetBody().y);
 			EventManager.GetInstance().QueueEvent( new ActorMovedEvent(body.GetId(), newPos, body.GetBody().a) );
 		}	
+	}
+
+	public override function AddThrust( actorId : ActorId, thrust : Vector2 ) : Void
+	{
+		for(body in m_Bodies)
+		{
+			if(body.GetId() == actorId){
+				body.GetBody().setSpeed( thrust.GetX(), thrust.GetY());
+			}
+		}			
 	}
 }

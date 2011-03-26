@@ -23,15 +23,25 @@ import mrtank.event.EventType;
 import mrtank.actor.ActorId;
 import mrtank.event.IEventListener;
 import mrtank.event.EventManager;
+import mrtank.event.ThrustEvent;
+import mrtank.algebra.Vector2;
 
 class TankHumanGameView extends BaseGameView
 {
+	private static var FLASH_KEY_W:Int = 87;
+	private static var FLASH_KEY_A:Int = 65;
+	private static var FLASH_KEY_S:Int = 83;
+	private static var FLASH_KEY_D:Int = 68;
+	
 	private var m_ActorId : ActorId;
+	private var m_ThrustAmount : Float;
+	private var m_Background : BackgroundSceneNode;
 
 	public function new()
 	{
 		super();
 		m_ActorId = -1;
+		m_ThrustAmount = 40;
 	}
 
 	public override function Init() : Bool
@@ -39,6 +49,8 @@ class TankHumanGameView extends BaseGameView
 		var eventListener : IEventListener = new TankHumanGameViewListener(this);
 		ListenToTankGameViewEvents(eventListener);	
 
+		m_Background = new BackgroundSceneNode();
+		
 		return true;
 	}
 
@@ -53,4 +65,64 @@ class TankHumanGameView extends BaseGameView
 		m_ActorId = actorId;
 	}
 
+	public function ReportKeyDown(event:flash.events.KeyboardEvent)
+	{
+		trace(event.keyCode);
+		if(event.keyCode == flash.ui.Keyboard.ESCAPE)
+		{
+			//			EventManager.GetInstance().Trigger(new GameEndedEvent());
+		}
+		else if (event.keyCode == FLASH_KEY_W)
+		{
+			EventManager.GetInstance().Trigger(new ThrustEvent(m_ActorId, new Vector2(0, -m_ThrustAmount)));
+		}
+		else if (event.keyCode == FLASH_KEY_A)
+		{
+			EventManager.GetInstance().Trigger(new ThrustEvent(m_ActorId, new Vector2(-m_ThrustAmount, 0)));
+		}
+		else if (event.keyCode == FLASH_KEY_S)
+		{
+			EventManager.GetInstance().Trigger(new ThrustEvent(m_ActorId, new Vector2(0, m_ThrustAmount)));		
+		}
+		else if (event.keyCode == FLASH_KEY_D)
+		{
+			EventManager.GetInstance().Trigger(new ThrustEvent(m_ActorId, new Vector2(m_ThrustAmount, 0)));		
+		}
+	}
+
+	public function ReportKeyUp(event:flash.events.KeyboardEvent)
+	{
+		if (event.keyCode == FLASH_KEY_W)
+		{
+			EventManager.GetInstance().Trigger(new ThrustEvent(m_ActorId, new Vector2(0, 0)));
+		}
+		else if (event.keyCode == FLASH_KEY_A)
+		{
+			EventManager.GetInstance().Trigger(new ThrustEvent(m_ActorId, new Vector2(0, 0)));
+		}
+		else if (event.keyCode == FLASH_KEY_S)
+		{
+			EventManager.GetInstance().Trigger(new ThrustEvent(m_ActorId, new Vector2(0, 0)));		
+		}
+		else if (event.keyCode == FLASH_KEY_D)
+		{
+			EventManager.GetInstance().Trigger(new ThrustEvent(m_ActorId, new Vector2(0, 0)));		
+		}
+	}
+
+	public override function OnRender() : Bool
+	{
+		m_Background.OnRender();
+
+		for(node in m_SceneNodes)
+		{
+			node.OnRender();
+		}
+		return true;
+	}
+
+	public override function OnUpdate() : Bool
+	{
+		return true;
+	}
 }

@@ -20,6 +20,7 @@ package mrtank.gamelogic;
 
 import haxe.FastList;
 
+import mrtank.algebra.Point2;
 import mrtank.gamelogic.BaseGameLogic;
 import mrtank.gamelogic.GameState;
 import mrtank.gamelogic.TankGameLogicListener;
@@ -73,7 +74,6 @@ class TankGameLogic extends BaseGameLogic
 
 	public override function OnUpdate() : Bool
 	{
-		
 		switch(m_State)
 		{
 			case MT_GS_Start:
@@ -113,6 +113,7 @@ class TankGameLogic extends BaseGameLogic
 				playerTankRadius = 2.0;
 				var playerTank : TankActor;
 				playerTank = new TankActor(playerTankRadius);
+				playerTank.SetPos(new Point2(100,100));
 				EventManager.GetInstance().QueueEvent( new RequestNewActorEvent(playerTank) );
 			default:
 				trace("Invalid level choice");
@@ -121,8 +122,8 @@ class TankGameLogic extends BaseGameLogic
 
 	public function ListenToTankGameLogicEvents( eventListener : IEventListener ) : Void
 	{	
-		//TODO:Add appropriate events here.
 		EventManager.GetInstance().AddListener(eventListener, MT_EVENT_GameState);
+		EventManager.GetInstance().AddListener(eventListener, MT_EVENT_Thrust);
 	}
 
 	public function GetNewActorId() : ActorId

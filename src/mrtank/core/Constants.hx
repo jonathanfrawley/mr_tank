@@ -16,28 +16,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-package mrtank.physics;
-
-import mrtank.actor.IActor;
-import mrtank.actor.ActorId;
-import mrtank.algebra.Vector2;
-
-class BasePhysics
+package mrtank.core;
+	
+class Constants
 {
-	public function new()
-	{
-	}
-
-	public function Add(actor:IActor)
-	{
-		//TODO
-	}
-
-	public function Step(timeStep:Float)
-	{
-	}
-
-	public function AddThrust( actorId : ActorId, thrust : Vector2 ) : Void
-	{
-	}
+	public static var SCREEN_WIDTH = 400;
+	public static var SCREEN_HEIGHT = 300;
+	public static var BORDER_WIDTH = 10;
 }
+

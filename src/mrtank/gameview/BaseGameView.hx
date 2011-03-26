@@ -72,7 +72,6 @@ class BaseGameView implements IGameView
 		{
 			if(node.GetId() == id)
 			{
-				trace("Ho");
 				node.SetPos(pos);
 				node.SetOrientation(orientation);
 				return;

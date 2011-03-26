@@ -18,30 +18,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package mrtank.gameview;
 
-class TankSceneNode extends BaseSceneNode
-{
-    private var m_Circle : flash.display.Shape;
-	private var m_Radius : Float;
+import mrtank.core.Constants;
 
-	public function new(radius:Float)
+class BackgroundSceneNode extends BaseSceneNode
+{
+    private var m_Rectangle : flash.display.Shape;
+
+	public function new()
 	{
 		super();
-		m_Radius = radius;
-		m_Circle = new flash.display.Shape();
-		m_Circle.graphics.beginFill ( 0xEE0000 );
-		m_Circle.graphics.lineStyle ( 1, 0x000000, 1, false, flash.display.LineScaleMode.NONE );
-        //m_Circle.graphics.drawCircle ( tank.getPos().getX(), tank.getPos().getY(), tank.getRadius());
-        m_Circle.graphics.drawCircle ( radius, radius, radius);
-        m_Circle.graphics.endFill();
+		m_Rectangle = new flash.display.Shape();
+
+		m_Rectangle.graphics.beginFill(0x8B4513);
+		m_Rectangle.graphics.moveTo(0,0);
+		m_Rectangle.graphics.lineTo(Constants.SCREEN_WIDTH,0);
+		m_Rectangle.graphics.lineTo(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+		m_Rectangle.graphics.lineTo(0,Constants.SCREEN_HEIGHT);
+		m_Rectangle.graphics.lineTo(0,0);
 	}
 
 	public override function OnRender() : Void
 	{
-		m_Circle.x = m_Pos.GetX() - m_Radius;
-		m_Circle.y = m_Pos.GetY() - m_Radius;
-
-		flash.Lib.current.addChild(m_Circle);
+		flash.Lib.current.addChild(m_Rectangle);
 	}
-
-
 }
+

@@ -33,6 +33,7 @@ class EventManager
 
 	public function AddListener(inHandler:IEventListener, inType:EventType) : Bool
 	{
+		m_Listeners.remove(inHandler); //TODO:Remove hack, make a map
 		m_Listeners.add(inHandler);	
 		return true;
 	}

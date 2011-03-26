@@ -138,7 +138,6 @@ class MtPhysicsHandler implements MtEventListener
 				//m_HaxeWorld.activate(bullet.getBody());
 				//m_HaxeWorld.sync(bullet.getBody());
 
-
 				if(collision.testShapes(m_PlayerTank.getShape(), bullet.getShape(), arb))
 				{
 					MtEventManager.getInstance().trigger(new MtTankBulletCollisionEvent(m_PlayerTank, cast bullet));

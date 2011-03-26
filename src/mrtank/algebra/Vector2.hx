@@ -16,28 +16,36 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-package mrtank.physics;
+package mrtank.algebra;
 
-import mrtank.actor.IActor;
-import mrtank.actor.ActorId;
-import mrtank.algebra.Vector2;
-
-class BasePhysics
+class Vector2
 {
-	public function new()
+	private var m_X : Float;
+	private var m_Y : Float;
+
+	public function new(x:Float, y:Float)
 	{
+		m_X = x;
+		m_Y = y;
 	}
 
-	public function Add(actor:IActor)
+	public function GetX() : Float 
 	{
-		//TODO
+		return m_X;
 	}
 
-	public function Step(timeStep:Float)
+	public function SetX(val:Float) : Void 
 	{
+		m_X = val;
 	}
 
-	public function AddThrust( actorId : ActorId, thrust : Vector2 ) : Void
+	public function GetY() : Float 
 	{
+		return m_Y;
+	}
+
+	public function SetY(val:Float) : Void 
+	{
+		m_Y = val;
 	}
 }

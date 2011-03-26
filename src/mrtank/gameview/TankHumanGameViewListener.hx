@@ -64,14 +64,14 @@ class TankHumanGameViewListener implements IEventListener
 				case MT_GS_LevelLoading:
 					trace("Handing LevelLoading Event");
 				case MT_GS_Running:
-					trace("Handing Running Event");
+					flash.Lib.current.stage.addEventListener(flash.events.KeyboardEvent.KEY_DOWN,m_View.ReportKeyDown);
+					flash.Lib.current.stage.addEventListener(flash.events.KeyboardEvent.KEY_UP, m_View.ReportKeyUp);					
 				default:
 					trace("Invalid state reached");
 			}
 		}
 		else if (event.GetType() == MT_EVENT_NewActor)
 		{
-			trace("New Actor event");
 			var castEvent : NewActorEvent = cast event;	
 			var actor = castEvent.GetActor();
 
@@ -81,7 +81,6 @@ class TankHumanGameViewListener implements IEventListener
 			{
 				var castActor : TankActor = cast actor;
 				newSceneNode = new TankSceneNode(castActor.GetRadius());
-				trace("In if");
 				newSceneNode.SetPos(actor.GetPos());
 				newSceneNode.SetOrientation(actor.GetOrientation());
 				newSceneNode.SetId(actor.GetId());
@@ -91,16 +90,15 @@ class TankHumanGameViewListener implements IEventListener
 				}
 				//newSceneNode.SetViewId(actor.GetViewId());
 			}
+			trace("New actor" + actor.GetId());
 
 			if(newSceneNode != null)
 			{
 				m_View.AddSceneNode(newSceneNode);
 			}
-			trace("After if");
 		}
 		else if (event.GetType() == MT_EVENT_ActorMoved)
 		{
-			trace("Actor Moved Event Handled in GameView");
 			var castEvent : ActorMovedEvent = cast event;	
 			var id = castEvent.GetId();
 			var pos = castEvent.GetPos();

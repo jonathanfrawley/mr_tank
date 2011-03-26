@@ -16,28 +16,32 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **/
 
-package mrtank.physics;
+package mrtank.event;
 
-import mrtank.actor.IActor;
+import mrtank.event.EventType;
 import mrtank.actor.ActorId;
+import mrtank.algebra.Point2;
 import mrtank.algebra.Vector2;
 
-class BasePhysics
+class ThrustEvent extends BaseEvent
 {
-	public function new()
+	private var m_Id : ActorId;
+	private var m_Thrust : Vector2;
+
+	public function new(id:ActorId, thrust:Vector2)
 	{
+		super(MT_EVENT_Thrust);	
+		m_Id = id;
+		m_Thrust = thrust;
 	}
 
-	public function Add(actor:IActor)
+	public function GetId() : ActorId
 	{
-		//TODO
+		return m_Id;
 	}
 
-	public function Step(timeStep:Float)
+	public function GetThrust() : Vector2
 	{
-	}
-
-	public function AddThrust( actorId : ActorId, thrust : Vector2 ) : Void
-	{
+		return m_Thrust;
 	}
 }
